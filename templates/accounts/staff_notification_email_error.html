@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="it">
+<body>
+<h1>Errore durante la registrazioen di un Ex Allievo</h1>
+<h2>Controlla eventuali errori</h2>
+<table style="max-width: 640px">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Cognome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ first_name }}</td>
+            <td>{{ last_name }}</td>
+        </tr>
+    </tbody>
+</table>
+<h3>Controlla l'account cliccando il
+    <a href="{{ request.scheme }}://{{ request.get_host }}{% url "admin:index" %}">link</a>
+</h3>
+<footer>Questa email ti è stata invianta perchè fai parte dello staff</footer>
+</body>
+</html>

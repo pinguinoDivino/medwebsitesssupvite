@@ -1,0 +1,24 @@
+{% extends 'accounts/auth_layout.html' %}
+{% load static %}
+{% block head_auth %}
+<title>Registrazione completata</title>
+{% endblock%}
+{% block content_auth %}
+<div class="row auth-waiting">
+  <div class="col-12">
+    <div>Registrazione completata. <br>
+      Manca solo la <span style="color: var(--secondary)">
+                    conferma dell'amministratore.</span>
+    </div>
+    <div>Quando anche questo sarà fatto, riceverai una email di conferma
+      all'indirizzo che hai inserito,<br> di solito entro 24h
+      <strong>(non davvero)</strong>.
+    </div>
+    <div>
+      <button class="auth-waiting-btn"><a
+        class="auth-registration-link"
+        href="{% url 'accounts:login' %}">Torna alla schermata di Login</a></button>
+    </div>
+  </div>
+</div>
+{% endblock %}

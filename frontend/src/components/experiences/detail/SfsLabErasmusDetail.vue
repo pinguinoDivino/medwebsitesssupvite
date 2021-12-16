@@ -1,0 +1,37 @@
+<template>
+  <div class="row text-center">
+    <div class="col-md-6">
+      <h3>Istituto</h3>
+      <span class="information">{{ attrs.istitution }}</span>
+    </div>
+    <div class="col-md-6">
+      <h3>Si può scrivere la tesi?</h3>
+      <div v-if="attrs.thesis === true" class="check"></div>
+      <div v-else-if="attrs.thesis === false">No</div>
+      <div v-else class="not-found"><p>Non disponibile</p></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['attrs'],
+};
+</script>
+
+<style scoped>
+.information {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: var(--orange);
+}
+.check {
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 12px;
+  width: 24px;
+  border-bottom: 7px solid #4EAC47;
+  border-right: 7px solid #4EAC47;
+  padding: 1rem;
+}
+</style>

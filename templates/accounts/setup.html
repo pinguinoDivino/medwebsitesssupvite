@@ -1,0 +1,63 @@
+{% extends 'accounts/auth_layout.html' %}
+{% load static %}
+{% block head_auth %}
+<title>Completa il tuo profilo</title>
+{% endblock%}
+{% block content_auth %}
+<div class="auth-setup-container">
+  <div class="row">
+    <div class="col-12">
+      <form method="post">{% csrf_token %}
+        <div class="form-group">
+          <label for="entry_year">Anno accademico di iscrizione a medicina</label>
+          <select id="entry_year" name="entry_year" class="select-css">
+            {% for x,y in form.fields.entry_year.choices %}
+            <option value="{{ x }}" {% if form.fields.entry_year.value== x %} selected {% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tutor">Tutor</label>
+          <select id="tutor" name="tutor" class="select-css">
+            {% for x,y in form.fields.tutor.choices %}
+            <option value="{{ x }}" {% if form.fields.tutor.value== x %} selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="tutor">Acconsenti al <a target="_blank"
+              href="{% url 'accounts:data-treatment' %}">trattamento dei dati</a>?</label>
+            <div class="inline-form-group">
+              <input type="radio" value="True" id="yes" name="data_treatment"/>
+              <label for="yes">Accetto</label>
+            </div>
+            <div class="inline-form-group">
+              <input type="radio" value="False" id="no" name="data_treatment"/>
+              <label for="no">Non accetto</label>
+            </div>
+            {% if form.errors %}
+            <div class="invalid-message">{{ form.data_treatment.errors.as_text }}</div>
+            {% endif %}
+          </div>
+        <div class="form-group">
+          {% if form.errors %}
+          {% for field in form %}
+          {% for error in field.errors %}
+          <div class="invalid-message">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <div class="invalid-message">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <button type="submit" class="auth-setup-btn">Salva</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

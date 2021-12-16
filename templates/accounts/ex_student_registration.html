@@ -1,0 +1,94 @@
+{% extends 'accounts/auth_layout.html' %}
+{% load static %}
+{% block head_auth %}
+<title>Registrazione Ex Allievi</title>
+{% endblock%}
+{% block content_auth %}
+<div class="auth-registration-container">
+  <div class="row">
+    <div class="col-12 hidden-md" style="padding: 0;">
+      <img class="auth-login-img img-responsive" src="{% static 'img/auth/registration1.jpg' %}"
+           alt="Immagine di Login"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 display-md">
+      <img class="auth-registration-img" src="{% static 'img/auth/registration2.jpeg' %}"/>
+    </div>
+    <div class="col-md-6 vertical-aligment">
+        <h1>Registrati</h1>
+        <form method="post">{% csrf_token %}
+          <div class="form-group">
+            <input type="text" name="first_name" placeholder="Nome"/>
+          </div>
+          <div class="form-group">
+            <input type="text" name="last_name" placeholder="Cognome"/>
+          </div>
+          <div class="form-group">
+            <input type="text" name="email" placeholder="Email"/>
+            {% if form.errors %}
+            <div class="invalid-message">{{ form.email.errors.as_text  }}</div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="entry_year">Anno accademico di iscrizione a medicina</label>
+            <select id="entry_year" name="entry_year" class="select-css">
+              {% for x,y in form.fields.entry_year.choices %}
+              <option value="{{ x }}"{% if form.fields.entry_year.value == x %} selected {% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tutor">Tutor</label>
+            <select id="tutor" name="tutor" class="select-css">
+              {% for x,y in form.fields.tutor.choices %}
+              <option value="{{ x }}"{% if form.fields.tutor.value == x %} selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password1" placeholder="Password"/>
+            {% if form.errors %}
+            <div class="invalid-message">{{ form.password1.errors.as_text  }}</div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <input type="password" name="password2" placeholder="Conferma password"/>
+            {% if form.errors %}
+            <div class="invalid-message">{{ form.password2.errors.as_text  }}</div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <label for="tutor">Acconsenti al <a  target="_blank"
+              href="{% url 'accounts:data-treatment' %}"
+            >trattamento dei dati</a>?</label>
+            <div class="inline-form-group">
+              <input type="radio" value="True" id="yes" name="data_treatment"/>
+              <label for="yes">Accetto</label>
+            </div>
+            <div class="inline-form-group">
+              <input type="radio" value="False" id="no" name="data_treatment"/>
+              <label for="no">Non accetto</label>
+            </div>
+            {% if form.errors %}
+            <div class="invalid-message">{{ form.data_treatment.errors.as_text }}</div>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            {% if form.errors %}
+            {% for error in form.non_field_errors %}
+            <div class="invalid-message">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <button type="submit" class="auth-registration-btn">Crea un account</button>
+          <button type="button" class="auth-registration-btn back">
+            <a class="auth-back-link" href="{% url 'accounts:login' %}">Indietro</a></button>
+        </form>
+    </div>
+  </div>
+</div>
+<footer class="auth-footer"></footer>
+{% endblock %}

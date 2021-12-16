@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+{% block head_auth %}{% endblock %}
+{% endblock%}
+{% block content %}
+<div class="container-fluid auth-external-container">
+  <div class="row auth-header-row">
+    <div class="col-12">
+      <header class="auth-header">
+        <div class="auth-header-first">Sant'Anna</div>
+        <div class="auth-header-second">Esperienze di Medicina</div>
+      </header>
+    </div>
+  </div>
+  {% block content_auth %} {% endblock %}
+</div>
+
+{% endblock %}

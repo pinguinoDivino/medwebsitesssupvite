@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+<body>
+<h1>Un Ex-Allievo sta cercando di accedere</h1>
+<h2>Controlla le sue informazioni prima di autorizzarlo ad accedere!</h2>
+<table style="max-width: 640px">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Anno di immatricolazione</th>
+            <th>Email</th>
+            <th>Tutor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ username }}</td>
+            <td>{{ first_name }}</td>
+            <td>{{ last_name }}</td>
+            <td>{{ year }}</td>
+            <td>{{ email }}</td>
+            <td>{{ tutor }}</td>
+        </tr>
+    </tbody>
+</table>
+<h3>Attiva l'account cliccando il
+    <a href="{{ request.scheme }}://{{ request.get_host }}{% url "admin:index" %}">link</a>
+</h3>
+<footer>Questa email ti è stata invianta perchè fai parte dello staff</footer>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <script type="module" src="http://localhost:8001/@vite/client"></script>
+{% endblock%}
+{% block content %}
+     <div id="app"></div>
+{% endblock %}
+{% block js %}
+    <script type="module" src="http://localhost:8001/src/main.js"></script>
+{% endblock %}

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "auth.group",
+        "fields": {
+            "name": "Recruiter"
+        }
+    },
+    {
+        "model": "auth.group",
+        "fields": {
+            "name": "Rappset"
+        }
+    }
+]

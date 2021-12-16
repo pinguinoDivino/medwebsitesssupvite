@@ -1,0 +1,51 @@
+{% extends 'accounts/auth_layout.html' %}
+{% load static %}
+{% block head_auth %}
+<title>SSSUP Medicina</title>
+{% endblock%}
+{% block content_auth %}
+<div class="auth-login-container">
+  <div class="row">
+    <div class="col-12 hidden-md" style="padding: 0;">
+      <img class="auth-login-img img-responsive" src="{% static 'img/auth/login1.jpg' %}"
+           alt="Immagine di Login"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 vertical-aligment">
+      <h1>Entra</h1>
+      <form method="post">{% csrf_token %}
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Nome utente (n.cognome)"/>
+          {% if form.errors %}
+          <div class="invalid-message">{{ form.username.errors.as_text }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Password"/>
+          {% if form.errors %}
+          <div class="invalid-message">{{ form.password.errors.as_text }}</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {% if form.errors %}
+          {% for error in form.non_field_errors %}
+          <p class="invalid-message">
+            <strong>{{ error|escape }}</strong>
+          </p>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <button type="submit" class="auth-login-btn">Login</button>
+      </form>
+      <a href="{% url 'accounts:ex-student-registration' %}" class="auth-registration-link">
+        Sei un ex-allievo e non riesci ad accedere?
+      </a>
+    </div>
+    <div class="col-md-6 display-md pr-0">
+      <img class="auth-login-img" src="{% static 'img/auth/login2.jpeg' %}" alt="Immagine di Login"/>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
