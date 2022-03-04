@@ -165,7 +165,7 @@ class ExperienceAdmin(admin.ModelAdmin):
         }),
         ("Contatti", {
             'classes': ('collapse',),
-            'fields': ('ref', 'ref_email', 'author_contact'),
+            'fields': ('ref',  'author_contact'),
         }),
         ("Informazioni aggiuntive", {
             'classes': ('collapse',),
@@ -180,7 +180,7 @@ class ExperienceAdmin(admin.ModelAdmin):
         }),
         ("Contatti", {
             'classes': ('collapse',),
-            'fields': ('ref', 'ref_email', 'author_contact'),
+            'fields': ('ref', 'author_contact'),
         }),
         ("Informazioni aggiuntive", {
             'classes': ('collapse',),
@@ -293,6 +293,8 @@ class OpportunityAdmin(admin.ModelAdmin):
             'fields': ("author", 'description', 'university', 'istitution', 'ref', 'active',  'tags'),
         }),
     )
+
+    save_as = True
 
 
 admin.site.register(Experience, ExperienceAdmin)

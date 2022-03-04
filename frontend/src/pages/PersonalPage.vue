@@ -10,10 +10,10 @@
         <div v-if="userIsAuth1" :class="{active: component === 'user-experiences'}">
           <h2 @click="setComponent('exp')">Esperienze</h2>
         </div>
-        <div v-if="userIsAuth1" :class="{active: component === 'user-internships'}">
+        <div v-if="userIsAuth2" :class="{active: component === 'user-internships'}">
           <h2 @click="setComponent('int')">Tirocini</h2>
         </div>
-        <div v-if="userIsAuth2" :class="{active: component === 'user-opportunities'}">
+        <div v-if="userIsAuth3" :class="{active: component === 'user-opportunities'}">
           <h2 @click="setComponent('opp')">Opportunità</h2>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default {
     UserOpportunities,
   },
   setup() {
-    const {userFullName, userIsAuth1, userIsAuth2, userIsStaff} = useAuth();
+    const {userFullName, userIsAuth1, userIsAuth2, userIsAuth3,  userIsStaff} = useAuth();
 
     const component = ref();
 
@@ -56,6 +56,7 @@ export default {
       userFullName,
       userIsAuth1,
       userIsAuth2,
+      userIsAuth3,
       userIsStaff,
       component,
       setComponent

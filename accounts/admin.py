@@ -23,10 +23,10 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Anagrafica', {'fields': ('first_name', 'last_name')}),
         ('Ruolo', {'fields': ('title', 'employeeType', 'ou')}),
         ('Attività', {'fields': ('date_joined', 'last_login', 'is_active', 'is_staff', 'groups', 'user_permissions')}),
-        ('Informazioni aggiuntive', {'fields': ('is_user_disabled_by_school',)})
+        ('Informazioni aggiuntive', {'fields': ('is_user_disabled_by_school', 'dpc')})
     )
 
-    readonly_fields = ['date_joined', 'last_login']
+    readonly_fields = ['date_joined', 'last_login', 'dpc']
 
     add_fieldsets = (
         ("User", {

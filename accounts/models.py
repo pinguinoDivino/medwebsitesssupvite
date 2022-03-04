@@ -22,6 +22,7 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_user_disabled_by_school', "Non è un account di Scuola")
         extra_fields.setdefault('first_name', 'Amministratore')
         extra_fields.setdefault('last_name', 'del Sito')
+        extra_fields.setdefault('dpc', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_('Superuser must have is_staff=True.'))
@@ -104,6 +105,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     is_user_disabled_by_school = models.CharField(_('è stato disattivato da Scuola?'), max_length=150,
                                                   default="Non è un account di Scuola")
+    dpc = models.BooleanField(_("Consenso trattamento dati"), default=False, blank=True)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
@@ -143,15 +145,28 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.pk,))
 
     @property
-    def is_auth1(self):
-        return StudentAccount.objects.filter(Q(user=self), Q(is_set_up=True)).exists() \
-               or WhitelistEmail.objects.filter(email=self.email) or self.is_superuser
-
-    @property
-    def is_auth2(self):
+    def is_auth1(self):  # w-experiences
         if self.is_superuser:
             return True
-        return TutorAccount.objects.filter(user=self) or self.groups.filter(name="Recruiter").exists()
+        return StudentAccount.objects.filter(Q(user=self), Q(is_set_up=True)).exists()
+
+    @property
+    def is_auth2(self):  # rw-unipi-internships
+        if self.is_superuser:
+            return True
+        return StudentAccount.objects.filter(Q(user=self), Q(is_set_up=True)).exists()
+
+    @property
+    def is_auth3(self):  # w-opportunities
+        if self.is_superuser:
+            return True
+        return TutorAccount.objects.filter(user=self).exists() or self.groups.filter(name="Recruiter").exists()
+
+    @property
+    def is_auth4(self):  # tutees options
+        if self.is_superuser:
+            return True
+        return TutorAccount.objects.filter(user=self).exists()
 
 
 class WhitelistEmail(models.Model):

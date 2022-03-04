@@ -13,6 +13,8 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField(read_only=True)
     is_auth1 = serializers.SerializerMethodField(read_only=True)
     is_auth2 = serializers.SerializerMethodField(read_only=True)
+    is_auth3 = serializers.SerializerMethodField(read_only=True)
+    is_auth4 = serializers.SerializerMethodField(read_only=True)
     is_staff = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -34,8 +36,20 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     def get_is_auth2(self, instance):
         return instance.is_auth2
 
+    def get_is_auth3(self, instance):
+        return instance.is_auth3
+
+    def get_is_auth4(self, instance):
+        return instance.is_auth4
+
     def get_is_staff(self, instance):
         return instance.is_staff
+
+
+class UserUpdateDpcSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('dpc', )
 
 
 class StudentAccountDisplaySerializer(serializers.ModelSerializer):
@@ -53,6 +67,7 @@ class StudentAccountDisplaySerializer(serializers.ModelSerializer):
 class TutorAccountDisplaySerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     full_name = serializers.SerializerMethodField(read_only=True)
+    tutee_list = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = TutorAccount
@@ -60,3 +75,6 @@ class TutorAccountDisplaySerializer(serializers.ModelSerializer):
 
     def get_full_name(self, instance):
         return instance.user.get_full_name()
+
+    def get_tutee_list(self, instance):
+        return {x.username: x.get_full_name() for x in instance.tutees}

@@ -35,38 +35,54 @@ const routes = [
     path: "/aggiungi/:type?/:slug?/:scope?/:group?",
     name: "activity-editor",
     props: true,
-    component: ActivityEditor
+    component: ActivityEditor,
+    meta: {
+      requiresDpc: true
+    }
   },
   {
     path: "/esperienze/elenco/:optionsOn?",
     name: "experiences-list",
     props: true,
     component: ExperiencesList,
+    meta: {
+      requiresDpc: true
+    }
   },
   {
     path: "/opportunita/elenco",
     name: "opportunities-list",
     props: true,
     component: OpportunitiesList,
+    meta: {
+      requiresDpc: true
+    }
   },
   {
     path: "/tirocini-unipi/elenco",
     name: "internships-list",
     component: InternshipsList,
     meta: {
-      requiresAuth1: true
+      requiresDpc: true,
+      requiresAuth2: true
     }
   },
   {
     path: "/esperienza/dettagli/:slug",
     name: "experience-detail",
     props: true,
-    component: ExperienceDetail
+    component: ExperienceDetail,
+    meta: {
+      requiresDpc: true
+    }
   },
   {
     path: "/profilo",
     name: "personal-page",
-    component: PersonalPage
+    component: PersonalPage,
+    meta: {
+      requiresDpc: true
+    }
   },
   {
     path: "/:pageNotFound(.*)",
@@ -74,10 +90,9 @@ const routes = [
     component: NotFound
   }
 ];
-// TODO change production url
 const router = createRouter({
   routes,
-  base: import.meta.env.PROD ? "https://med.santannapisa.it/" : "http://127.0.0.1:8000/",
+  base: import.meta.env.PROD ? "https://medexperiences.santannapisa.it/" : "http://127.0.0.1:8000/",
   history: createWebHistory(),
   scrollBehavior() {
     return { left: 0, top: 0 };
@@ -85,7 +100,13 @@ const router = createRouter({
 });
 
 router.beforeEach(function(to, from, next) {
-  if (to.meta.requiresAuth1 && !store.getters.userIsAuth1) {
+  if(to.meta.requiresDpc && !store.getters.userDpc) {
+    next({ name: "home", params: { dpcError: true }});
+  }else if (to.meta.requiresAuth1 && !store.getters.userIsAuth1) {
+    next({ name: "home" });
+  } else if(to.meta.requiresAuth2 && !store.getters.userIsAuth2 ){
+    next({ name: "home" });
+  } else if(to.meta.requiresAuth3 && !store.getters.userIsAuth3 ){
     next({ name: "home" });
   } else {
     next();

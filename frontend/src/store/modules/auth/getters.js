@@ -14,6 +14,12 @@ export default {
   userIsAuth2(state) {
     return state.userIsAuth2;
   },
+  userIsAuth3(state) {
+    return state.userIsAuth3;
+  },
+  userDpc(state){
+    return state.userDpc;
+  },
   userIsStaff(state) {
     return state.userIsStaff;
   },

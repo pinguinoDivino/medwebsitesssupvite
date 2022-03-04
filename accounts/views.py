@@ -45,6 +45,9 @@ class SetUpAccountView(UpdateView):
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         self.object = form.save()
+        user = self.object.user
+        user.dpc = True
+        user.save()
         self.object.is_set_up = True
         self.object.save()
         return super().form_valid(form)

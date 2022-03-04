@@ -64,23 +64,23 @@
         {{ selectedCity.country }}.
       </label>
     </div>
-    <structure-creation-form
+    <city-creation-form
         :show="isCityCreationShown"
         @new-city="addNewCity"
         :cities="cities"
         :countries="countriesList"
         @close="toggleCityCreationModal"
-    ></structure-creation-form>
+    ></city-creation-form>
   </div>
 </template>
 
 <script>
 import {ref, computed, toRefs, watch} from "vue";
-import StructureCreationForm from "./CityCreationForm.vue";
+import CityCreationForm from "./CityCreationForm.vue";
 import {removeDuplicatesFromNestedArray} from "../../../hooks/baseFunctions.js";
 
 export default {
-  components: {StructureCreationForm},
+  components: {CityCreationForm},
   props: ["cities", "oldCity", "less"],
   emits: ["update-city"],
   setup(props, context) {

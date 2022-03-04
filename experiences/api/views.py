@@ -1,9 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Count
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import filters
+from accounts.api.permissions import IsTutor
 from experiences.api.filters import experience_filter, DynamicSearchFilter, DynamicSearchOpportunityFilter, \
     opportunity_filter, DynamicSearchInternshipFilter, internship_filter
 from experiences.api.pagination import StandardResultsSetPagination, StandardOpportunitiesResultsSetPagination, \
@@ -18,6 +19,10 @@ from experiences.models import Tag, Experience, SfsLabErasmusAdditionalAttribute
     UnipiInternship, University, InternshipAdditionalAttributes, Opportunity, City
 from core.utils import EXPERIENCE_TYPES, EXP_GROUP_TAGS, OPP_GROUP_TAGS, WARDS, switcher, UNIPI_INTERNSHIP_PLACES, \
     ATTENDANCE_CHOICES, UNIPI_INTERNSHIP_YEAR
+from collections import Counter
+
+
+User = get_user_model()
 
 
 class UniversityListView(generics.ListAPIView):
@@ -36,12 +41,14 @@ class CityCreateView(generics.CreateAPIView):
 
 
 class ExpTagListView(generics.ListAPIView):
-    queryset = Tag.objects.filter(group__in=[x[0] for x in EXP_GROUP_TAGS]).annotate(count=Count('experiences__pk')).order_by('-count')
+    queryset = Tag.objects.filter(group__in=[x[0] for x in EXP_GROUP_TAGS]).annotate(
+        count=Count('experiences__pk')).order_by('-count')
     serializer_class = TagSerializer
 
 
 class OppTagListView(generics.ListAPIView):
-    queryset = Tag.objects.filter(group__in=[x[0] for x in OPP_GROUP_TAGS]).annotate(count=Count('opportunities__pk')).order_by(
+    queryset = Tag.objects.filter(group__in=[x[0] for x in OPP_GROUP_TAGS]).annotate(
+        count=Count('opportunities__pk')).order_by(
         '-count')
     serializer_class = TagSerializer
 
@@ -243,3 +250,69 @@ class UnipiInternshipAttendanceChoicesApiView(views.APIView):
 class UnipiInternshipYearsApiView(views.APIView):
     def get(self, request, format=None):
         return Response(UNIPI_INTERNSHIP_YEAR)
+
+
+class ExperienceTypeGraphDataApiView(views.APIView):
+    def getTypeName(self, item):
+        for el in EXPERIENCE_TYPES:
+            if item == el[0]:
+                return el[1]
+
+    def get(self, request, format=None):
+        data = {}
+        for el in Experience.objects.all():
+            if self.getTypeName(el.type) in list(data.keys()):
+                data[self.getTypeName(el.type)] += 1
+            else:
+                data[self.getTypeName(el.type)] = 1
+        return Response(data)
+
+
+class ExperienceCountryGraphDataApiView(views.APIView):
+    def get(self, request, format=None):
+        data = {}
+        for el in Experience.objects.all():
+            if el.city.country in list(data.keys()):
+                data[el.city.country] += 1
+            else:
+                data[el.city.country] = 1
+        return Response(data)
+
+
+class ExperienceTagGraphDataApiView(views.APIView):
+    def get(self, request, format=None):
+        data = {}
+        for el in Experience.objects.all():
+            for t in el.tags.all():
+                if t.name in list(data.keys()):
+                    data[t.name] += 1
+                else:
+                    data[t.name] = 1
+        return Response(dict(Counter(data).most_common(10)))
+
+
+class ExperiencesTutorDashboard(views.APIView):
+    permission_classes = [IsTutor, ]
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.dashboard = True
+
+    def set_option(self):
+        if self.kwargs.get('username') != "all":
+            self.dashboard = False
+
+    def get_username(self):
+        return self.kwargs.get('username')
+
+    def get_author_obj(self):
+        return User.objects.get(username=self.get_username())
+
+    def get_experiences(self):
+        self.set_option()
+        if self.dashboard:
+            return Experience.objects.filter(author__in=self.request.user.tutor.tutees)
+        return Experience.objects.filter(author=self.get_author_obj())
+
+
+

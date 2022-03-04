@@ -92,7 +92,7 @@
     <base-dialog
         :show="!!loadingError"
         title="Errore nel caricamento"
-        @close="handleError('loadingError')">
+        @close="handleError">
     </base-dialog>
   </div>
 </template>
@@ -273,8 +273,8 @@ export default {
       eval(input).errorText = "";
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      loadingError.value = null;
     }
 
     function goToTop() {

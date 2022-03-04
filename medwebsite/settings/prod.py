@@ -3,7 +3,8 @@
 from . import *  # Import base settings from settings/__init__.py
 
 DEBUG = False
-ALLOWED_HOSTS = ['www.terzamissione.santannapisa.it', 'terzamissione.santannapisa.it']
+ALLOWED_HOSTS = ['www.medexperiences.santannapisa.it', 'medexperiences.santannapisa.it',
+                 '193.205.80.230', '192.168.64.188']
 
 STATIC_ROOT = '/home/f.leonetti/static-serve/'
 STATIC_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
@@ -32,7 +33,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "/home/f.leonetti/logs/terzamissione.log",
+            "filename": "/home/f.leonetti/logs/medwebsite.log",
             "formatter": "app",
         },
     },

@@ -117,24 +117,6 @@
                 {{ refName.errorText }}
               </div>
             </div>
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-5"
-                 :class="{ invalid: !refEmail.isValid }"
-            >
-              <label for="refEmail">Email del referente</label>
-              <input
-                  id="refEmail"
-                  type="text"
-                  class="form-control"
-                  v-model.trim="refEmail.val"
-                  placeholder="Lascia l'indirizzo email del referente"
-                  @blur="clearValidity('refEmail')"
-              />
-              <div class="invalid-message" v-if="!refEmail.isValid">
-                {{ refEmail.errorText }}
-              </div>
-            </div>
           </div>
         </div>
         <div class="form-group" ref="reviewDiv">
@@ -332,10 +314,10 @@
         </div>
       </form>
     </div>
-    <base-dialog :show="!!loadingError"
-                 title="Errore nel caricamento"
-                 @close="handleError('loadingError')">
-
+    <base-dialog
+        :show="!!loadingError"
+        title="Errore nel caricamento"
+        @close="handleError">
     </base-dialog>
   </div>
 </template>
@@ -435,17 +417,17 @@ export default {
       errorText: ""
     });
     const reviewA = reactive({
-      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r")[0] : "",
+      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r)")[1] : "",
       isValid: true,
       errorText: ""
     });
     const reviewB = reactive({
-      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r")[1] : "",
+      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r)")[2] : "",
       isValid: true,
       errorText: ""
     });
     const reviewC = reactive({
-      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r")[2] : "",
+      val: props.pAct !== null && !props.asModel ? props.pAct.review.split("&r)")[3] : "",
       isValid: true,
       errorText: ""
     });
@@ -456,11 +438,6 @@ export default {
     });
     const refName = reactive({
       val: props.pAct !== null ? props.pAct.ref : "",
-      isValid: true,
-      errorText: ""
-    });
-    const refEmail = reactive({
-      val: props.pAct !== null ? props.pAct.ref_email : "",
       isValid: true,
       errorText: ""
     });
@@ -744,29 +721,6 @@ export default {
         refName.isValid = false;
         refName.errorText = "Al massimo puoi usare 100 caratteri. Ne hai usati " + refName.val.length;
       }
-      if (refEmail.val === "") {
-        formIsValid.value = false;
-        refEmail.isValid = false;
-        refEmail.errorText = emptyFieldError;
-      }
-      if (
-          refEmail.val !== "" &&
-          refEmail.val !== undefined &&
-          refEmail.val.length > 100
-      ) {
-        formIsValid.value = false;
-        refEmail.isValid = false;
-        refEmail.errorText = "Al massimo puoi usare 100 caratteri. Ne hai usati " + refEmail.val.length;
-      }
-      if (
-          refEmail.val !== "" &&
-          refEmail.val !== undefined &&
-          !refEmail.val.includes('@')
-      ) {
-        formIsValid.value = false;
-        refEmail.isValid = false;
-        refEmail.errorText = "Indirizzo email non valido";
-      }
       if (cityId.val === null || cityId.val === 0 || cityId.val === undefined) {
         formIsValid.value = false;
         cityId.isValid = false;
@@ -788,7 +742,6 @@ export default {
         started_at: startingDate.val,
         ended_at: endingDate.val,
         ref: refName.val,
-        ref_email: refEmail.val,
         review: "&r)" + reviewA.val + "&r)" + reviewB.val + "&r)" + reviewC.val,
         indications: indications.val,
         rating: {
@@ -818,8 +771,8 @@ export default {
       eval(input).errorText = "";
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      loadingError.value = null;
     }
 
     // schort cuts
@@ -905,7 +858,6 @@ export default {
       reviewC,
       indications,
       refName,
-      refEmail,
       vGlobal,
       vStay,
       vAquiredKnowledge,

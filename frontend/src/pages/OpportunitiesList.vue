@@ -74,11 +74,6 @@
             </div>
           </div>
         </div>
-        <div class="row" v-if="isLoading">
-          <div class="col-12">
-            <base-spinner></base-spinner>
-          </div>
-        </div>
         <div class="row form-group" v-if="areOpportunitiesLoaded">
           <div class="col-12">
             <div class="display-md sidebar" id="mySidenav">
@@ -240,9 +235,14 @@
                 <base-spinner></base-spinner>
               </div>
               <div class="col-12" v-else>
-                <h3 class="not-found">Non sono state trovate delle attività</h3>
+                <h3 class="not-found">Non sono state trovate delle opportunità</h3>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row" v-else-if="isLoading">
+          <div class="col-12">
+            <base-spinner></base-spinner>
           </div>
         </div>
       </div>
@@ -250,7 +250,7 @@
     <base-dialog
         :show="!!error"
         title="Errore nel caricamento"
-        @close="handleError('error')"
+        @close="handleError"
     >
       <p>{{ error }}</p>
     </base-dialog>
@@ -611,8 +611,8 @@ export default {
       isFilterDialogOpen.value = false;
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      error.value = null;
     }
 
     loadOpportunities();

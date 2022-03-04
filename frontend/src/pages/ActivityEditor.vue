@@ -11,9 +11,9 @@
             actType.error
           }}</label>
         <select class="select-css" v-model="actType.val" id="actType">
-          <option v-if="userIsAuth1" value="experiences">Esperienza</option>
-          <option v-if="userIsAuth1" value="unipi-internships">Tirocinio curriculare</option>
-          <option v-if="userIsAuth2" value="opportunities">Opportunità</option>
+          <option v-if="(userIsAuth1 && !userIsAuth3) || userIsStaff" value="experiences">Esperienza</option>
+          <option v-if="userIsAuth2" value="unipi-internships">Tirocinio curriculare</option>
+          <option v-if="userIsAuth3" value="opportunities">Opportunità</option>
         </select>
         <base-button type="submit" mode="success">Avanti</base-button>
       </form>
@@ -22,7 +22,7 @@
       <base-dialog
           :show="!!submitError"
           title="Errore nel salvare i dati"
-          @close="handleError('submitError')"
+          @close="handleError"
       >
         <p>{{ submitError }}</p>
       </base-dialog>
@@ -77,7 +77,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const submitError = ref(null);
-    const {userIsAuth1, userIsAuth2, userEmail} = useAuth();
+    const {userIsAuth1, userIsAuth2, userIsAuth3, userIsStaff, userEmail} = useAuth();
     provide('userEmail', userEmail)
     const actType = reactive({
       val:
@@ -161,15 +161,16 @@ export default {
       }
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      submitError.value = null;
     }
 
-    document.title = "Aggiungi/modifica attività";
-
+    document.title = props.slug ? props.asModel ? "Aggiungi attività" : "Mmodifica attività" : "Aggiungi attività" ;
     return {
       userIsAuth1,
       userIsAuth2,
+      userIsAuth3,
+      userIsStaff,
       actType,
       form,
       selectActType,

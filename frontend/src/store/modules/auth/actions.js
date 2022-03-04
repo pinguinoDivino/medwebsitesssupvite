@@ -10,10 +10,20 @@ export default {
         userEmail: response.data.email,
         isAuth1: response.data.is_auth1,
         isAuth2: response.data.is_auth2,
+        isAuth3: response.data.is_auth3,
+        dpc: response.data.dpc,
         isStaff: response.data.is_staff,
       });
     } catch (error) {
       console.log(error.message);
+    }
+  },
+  async changeUserDpc(context, payload){
+    try {
+      await axiosService("/api/user-dpc/", "PUT" , payload);
+      context.commit("setDpc", {dpc: payload.dpc})
+    } catch (error){
+      console.log(error.message)
     }
   },
   changeUserTheme(context, payload) {

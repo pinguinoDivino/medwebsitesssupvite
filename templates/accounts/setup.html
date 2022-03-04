@@ -12,7 +12,7 @@
           <label for="entry_year">Anno accademico di iscrizione a medicina</label>
           <select id="entry_year" name="entry_year" class="select-css">
             {% for x,y in form.fields.entry_year.choices %}
-            <option value="{{ x }}" {% if form.fields.entry_year.value== x %} selected {% endif %}>{{ y }}</option>
+            <option value="{{ x }}" {% if form.fields.entry_year.value == x %} selected{% endif %}>{{ y }}</option>
             {% endfor %}
           </select>
         </div>
@@ -20,7 +20,7 @@
           <label for="tutor">Tutor</label>
           <select id="tutor" name="tutor" class="select-css">
             {% for x,y in form.fields.tutor.choices %}
-            <option value="{{ x }}" {% if form.fields.tutor.value== x %} selected{% endif %}>{{ y }}</option>
+            <option value="{{ x }}" {% if form.fields.tutor.value == x %} selected{% endif %}>{{ y }}</option>
             {% endfor %}
           </select>
         </div>

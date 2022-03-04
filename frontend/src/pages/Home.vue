@@ -172,13 +172,50 @@
       </div>
     </div>
   </div>
-  <base-dialog title="Avviso" :show="!!error"
-               @close="handleError('error')">
-    <h3>Ciao {{ userFullName }}</h3>
-    <p>
-      Volevamo avvisarti che non disponi dei permessi necessari a modificare / aggiungere elementi alle pagine. Per
-      questo motivo non potrai accedere ad alcune
-      aree del sito. Se pensi ci sia un errore contatta un amministratore.</p>
+  <base-dialog
+      title="Avviso"
+      :show="!!error"
+      @close="handleError"
+  >
+    <div>
+      <h3>Ciao {{ userFullName }}</h3>
+    </div>
+    <div>
+      <p class="not-found">{{ dpcMessage }}</p>
+    </div>
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
+    <div v-else>
+      <div v-if="!userDpc">
+        <h4>Trattamento dati</h4>
+        <div>
+          <p>Non hai ancora acconsentito al <a target="_blank" href="/accounts/trattamento-dati/"> trattamento dati</a>,
+            finchè non lo autorizzi non ti sarà concesso di proseguire nel sito.</p>
+          <form @submit.prevent="submitData">
+            <h5>Autorizzi al trattamento dati?</h5>
+            <div class="form-group">
+              <input class="form-control mr-1" type="radio" :value="true" id="yes" v-model="dpcInput">
+              <label for="yes">Accetto</label>
+            </div>
+            <div class="form-group">
+               <input class="form-control mr-1" type="radio" :value="false" id="no" v-model="dpcInput">
+              <label for="no">Rifiuto</label>
+            </div>
+            <div>
+              <base-button mode="primary" type="submit">Salva</base-button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div v-else>
+        <p>
+          Volevamo avvisarti che non disponi di tutti i permessi necessari a modificare / aggiungere elementi ad alcune
+          pagine.
+          Se pensi ci sia un errore contatta un amministratore.
+        </p>
+      </div>
+    </div>
   </base-dialog>
 </template>
 <script>
@@ -189,17 +226,24 @@ import {onBeforeRouteLeave} from "vue-router";
 
 
 export default {
-  setup() {
+  props: {
+    setupError: {
+      type: String,
+      required: false,
+      default: null
+    }
+  },
+  setup(props) {
     const store = useStore();
-    const {userFullName, userIsAuth1} = useAuth();
-    const error = ref(null);
+    const {userFullName, userIsAuth1, userDpc} = useAuth();
+    const error = ref(props.setupError ? props.setupError : null);
     if (!userIsAuth1.value) {
       store.dispatch("turnOffAnimation");
       error.value = "Errore nell'autentificazione";
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      error.value = null;
     }
 
     const width = ref(0);
@@ -243,7 +287,6 @@ export default {
     const resizeEventHandler = () => {
       width.value = window.innerWidth;
     };
-    width.value = window.innerWidth;
     window.addEventListener("resize", resizeEventHandler);
 
     onDeactivated(() => {
@@ -256,12 +299,52 @@ export default {
       store.dispatch("turnOffAnimation");
     })
 
+
+    const dpcInput = ref(false);
+    const isLoading = ref(false);
+    const dpcMessage = ref("");
+
+    async function submitData() {
+      isLoading.value = true;
+      try {
+        await store.dispatch("changeUserDpc", {dpc: dpcInput.value});
+        await store.dispatch("loadUserInformation");
+      } catch (e) {
+        console.log(e);
+      }
+      if (dpcInput.value) {
+        dpcMessage.value = "Hai accettato i termini del trattamento dati"
+      } else {
+        dpcMessage.value = "Non hai accettato i termini del trattamento dati"
+      }
+      isLoading.value = false;
+    }
+
+
     document.title = "MEDSSSUP Esperienze & Tirocini";
 
     return {
-      userFullName, error, handleError,
-      eramusSrc, sfsSrc, internshipSrc, congressSrc, summerschoolSrc, animated
+      userFullName,
+      userDpc,
+      error,
+      handleError,
+      eramusSrc,
+      sfsSrc,
+      internshipSrc,
+      congressSrc,
+      summerschoolSrc,
+      animated,
+      isLoading,
+      dpcMessage,
+      dpcInput,
+      submitData,
     };
+  },
+  async beforeRouteEnter(to, _, next) {
+    if (to.params.dpcError) {
+      to.params.setupError = "Errore nell'autentificazione";
+    }
+    return next();
   }
 };
 </script>
@@ -299,6 +382,7 @@ export default {
   transform: rotateX(180deg);
   animation: rotateX 1s 1s forwards 1, scale 2s 2.2s forwards 1;
 }
+
 .index::before {
   content: "";
   position: absolute;
@@ -350,7 +434,7 @@ export default {
     height: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 0 60px;
+    padding: 0 20px;
     box-shadow: 0 40px 50px rgba(0, 0, 0, 0.25);
   }
 }
@@ -397,8 +481,8 @@ export default {
 
 h1 {
   font-weight: bold;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 
 h2 {
@@ -408,10 +492,12 @@ h2 {
 .card {
   color: white;
 }
+
 .text-container {
-    height: 100%;
-    padding: 3px;
+  height: 100%;
+  padding: 3px;
 }
+
 .img-responsive,
 .img-container {
   margin: 0;
@@ -452,10 +538,12 @@ h2 {
 a:hover {
   font-weight: bold;
 }
+
 .spacer {
-    padding-top: 0.3rem;
-    background-color: var(--backgroundColor);
-  }
+  padding-top: 0.3rem;
+  background-color: var(--backgroundColor);
+}
+
 @media screen and (min-width: 992px) {
   .title {
     text-align: left;
@@ -463,7 +551,7 @@ a:hover {
 
   .container-fluid {
     text-align: left;
-    font-size: 1.18rem;
+    font-size: 1.30rem;
   }
 
   .text-container {
@@ -480,14 +568,34 @@ a:hover {
     padding-top: 1rem;
   }
 }
+
 @media screen and (min-width: 1060px) {
   .container-fluid {
-    font-size: 1.35rem;
+    font-size: 1.50rem;
   }
 }
+
 @media screen and (min-width: 1200px) {
   .container-fluid {
-    font-size: 1.40rem;
+    font-size: 1.60rem;
   }
+}
+@media screen and (min-width: 1300px) {
+  .container-fluid {
+    font-size: 1.70rem;
+  }
+}
+@media screen and (min-width: 1401px) {
+  .container-fluid {
+    font-size: 1.20rem;
+  }
+}
+@media screen and (min-width: 1501px) {
+  .container-fluid {
+    font-size: 1.30rem;
+  }
+}
+.mr-1 {
+  margin-right: 0.2rem;
 }
 </style>

@@ -9,7 +9,9 @@ export default {
     userEmail: null,
     userIsAuth1: false,
     userIsAuth2: false,
+    userIsAuth3: false,
     userIsStaff: false,
+    userDpc: false,
     theme: "light",
     animated: false
   },

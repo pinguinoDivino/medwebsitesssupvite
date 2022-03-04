@@ -90,7 +90,7 @@
     <base-dialog
         :show="!!loadingError"
         title="Errore nel caricamento"
-        @close="handleError('loadingError')">
+        @close="handleError">
       <p>{{ loadingError }}</p>
     </base-dialog>
     <base-dialog
@@ -212,8 +212,8 @@ export default {
       return string.replaceAll('&r)', '');
     }
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      loadingError.value = null;
     }
 
     return {
@@ -243,6 +243,7 @@ export default {
 <style scoped>
 .content {
   background-color: var(--itembackgroundColorList);
+  min-height: 60vh;
 }
 
 .side-container {

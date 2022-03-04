@@ -28,7 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="col-11 col-md-8">
+        <div class="col-12 col-md-8">
           <div class="item-container" v-for="opp of userOpportunities.slice(0, showNumber)" :key="opp.id">
             <div class="item-inner">
               <div class="item-header">
@@ -86,7 +86,7 @@
     <base-dialog
         :show="!!loadingError"
         title="Errore nel caricamento"
-        @close="handleError('loadingError')">
+        @close="handleError">
       <p>{{ loadingError }}</p>
     </base-dialog>
     <base-dialog
@@ -209,8 +209,8 @@ export default {
       return Object.entries(data).sort((a, b) => b[1] - a[7]).slice(0, 3);
     })
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      loadingError.value = null;
     }
 
     return {
@@ -239,6 +239,7 @@ export default {
 <style scoped>
 .content {
   background-color: var(--itembackgroundColorList);
+  min-height: 60vh;
 }
 
 .side-container {

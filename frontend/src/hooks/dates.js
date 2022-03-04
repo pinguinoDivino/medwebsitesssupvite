@@ -7,7 +7,7 @@ function useGoodDateFormat() {
       return "Non ancora conclusa";
     }
   }
-  function dateDiff(startingDate, endingDate) {
+  function dateDiff(startingDate, endingDate, format="std") {
     let startDate = new Date(
       new Date(startingDate).toISOString().substr(0, 10)
     );
@@ -43,8 +43,14 @@ function useGoodDateFormat() {
       }
       dayDiff += daysInMonth[startDate.getMonth()];
     }
-
-    return yearDiff + "Y " + monthDiff + "M " + dayDiff + "D";
+    if( format === "std"){
+     return yearDiff + "Y " + monthDiff + "M " + dayDiff + "D";
+    } else if(format=== "it") {
+      const a = yearDiff===1 ? " anno " : " anni ";
+      const b = monthDiff===1 ? " mese " : " mesi " ;
+      const c = dayDiff===1 ? " giorno " : " giorni ";
+      return yearDiff + a + monthDiff + b + dayDiff + c;
+    }
   }
 
   return { getGoodDateFormat, dateDiff };

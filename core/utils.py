@@ -15,6 +15,15 @@ starting_year = 2000
 sector = 'med'
 title_default = 'Allievo ciclo unico 6 anni'
 
+titles_login = [
+    title_default,
+    'Professore Associato',
+    'Professore Ordinario',
+    # 'Ricercatore T.D.',
+    # 'Ricercatore T.I.',
+    'Amministratore'  # superuser
+]
+
 SECTOR_DICT = {
     'Cl. Sc. Sperimentali  Ingegneria': 'ing',
     'Cl. Sc. Sperimentali  Medicina': 'med',
@@ -43,15 +52,16 @@ TUTORS = (
     #  ('f.leonetti', 'Filippo Leonetti')
 )
 
-YEAR_DICT = {'1': 'I',
-             '2': 'II',
-             '3': 'III',
-             '4': 'IV',
-             '5': 'V',
-             '6': 'VI',
-             '7': 'VII',
-             '8': 'Ex-Allievo'
-             }
+YEAR_DICT = {
+    '1': 'I',
+    '2': 'II',
+    '3': 'III',
+    '4': 'IV',
+    '5': 'V',
+    '6': 'VI',
+    '7': 'VII',
+    '8': 'Ex-Allievo'
+}
 
 EXPERIENCE_TYPES = (
     ('sfs', 'SFS'),

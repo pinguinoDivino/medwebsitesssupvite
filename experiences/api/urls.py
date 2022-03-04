@@ -57,4 +57,15 @@ urlpatterns = [
     path("internshipYears/", ev.UnipiInternshipYearsApiView.as_view(), name="internship-year-list"),
 
     path("experienceTypes/", ev.ExperienceTypes.as_view(), name="experience-type-list"),
+
+    path("data/experiences/types/", ev.ExperienceTypeGraphDataApiView.as_view(), name="experience-type-graph-data"),
+
+    path("data/experiences/countries/", ev.ExperienceCountryGraphDataApiView.as_view(),
+         name="experience-country-graph-data"),
+    path("data/experiences/tags/", ev.ExperienceTagGraphDataApiView.as_view(),
+         name="experience-tag-graph-data"),
+
+    path("tutor/data/<str:username>/experiences/", ev.ExperiencesTutorDashboard.as_view(),
+         name="tutor-data-student-experiences"),
+
 ]

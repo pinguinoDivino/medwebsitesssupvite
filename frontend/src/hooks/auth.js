@@ -17,6 +17,12 @@ export default function useAuth() {
   const userIsAuth2 = computed(function() {
     return store.getters.userIsAuth2;
   });
+  const userIsAuth3 = computed(function() {
+    return store.getters.userIsAuth3;
+  });
+  const userDpc = computed(function() {
+    return store.getters.userDpc;
+  });
   const userIsStaff = computed(function() {
     return store.getters.userIsStaff;
   });
@@ -29,7 +35,9 @@ export default function useAuth() {
     userEmail,
     userIsAuth1,
     userIsAuth2,
+    userIsAuth3,
     userIsStaff,
+    userDpc,
     theme
   };
 }

@@ -312,9 +312,6 @@
                   </tr>
                   </tbody>
                 </table>
-                <div v-if="isLoading">
-                  <base-spinner></base-spinner>
-                </div>
                 <base-button
                     v-if="next"
                     mode="primary"
@@ -332,12 +329,48 @@
             </div>
           </div>
         </div>
+        <div class="row" v-else-if="isLoading">
+          <div class="col-12">
+            <base-spinner></base-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-1">
+      <div class="col-12" v-if="graphLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <div class="col-12" v-if="graphError">
+        <p class="display-6 not-found">{{graphError}}</p>
+      </div>
+      <div class="col-12" v-else>
+        <div class="row">
+          <div class="col-12">
+            <h2>Statistiche generali</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h3>Tipologie</h3>
+            <pie-chart :data="expTypeGraphData" legend="bottom"
+                           :colors="['#449c9f', '#8c6292', '#f56300', '#d04f4f', '#50AC49', '#FF9E7A']"
+                ></pie-chart>
+          </div>
+          <div class="col-12">
+            <h3>I 10 Tags più usati</h3>
+            <column-chart :data="expTagGraphData" legend="bottom" :colors="['#000000', '#D52732',
+                  '#4D8725', '#04ffd9', '#EE8E01', '#522D6D',
+                  '#017488', '#908F8D', '#005696'
+                ]"
+                ></column-chart>
+          </div>
+        </div>
       </div>
     </div>
     <base-dialog
         :show="!!error"
         title="Errore nel caricamento"
-        @close="handleError('error')"
+        @close="handleError"
     >
       <p>{{ error }}</p>
     </base-dialog>
@@ -796,8 +829,8 @@ export default {
       loadExperiences("filter");
     });
 
-    function handleError(input) {
-      eval(input).value = null;
+    function handleError() {
+      error.value = null;
     }
 
     //sidenav md width > 768px
@@ -829,8 +862,6 @@ export default {
       isFilterDialogOpen.value = false;
     }
 
-    document.title = "Lista delle esperienze";
-
     async function setDefaultOptions() {
       await loadExperiences();
       if (props.optionsDefault && props.optionsDefault.length > 0) {
@@ -840,6 +871,33 @@ export default {
     }
 
     setDefaultOptions();
+
+    // graphs
+
+    const expTypeGraphData = ref(null);
+    const expCountryGraphData = ref(null);
+    const expTagGraphData = ref(null);
+    const graphError = ref(null);
+    const graphLoading = ref(false);
+
+    async function loadGraphData(){
+      graphLoading.value = true;
+      try {
+        const responseA = await axiosService("/api/data/experiences/types/");
+        const responseB = await axiosService("/api/data/experiences/counties/");
+        const responseC = await axiosService("/api/data/experiences/tags/");
+        expTypeGraphData.value = await responseA.data;
+        expCountryGraphData.value = await responseB.data;
+        expTagGraphData.value = await responseC.data;
+      } catch (e){
+        graphError.value = catchAxiosError(e, "Impossibile caricare i dati dei grafici")
+      }
+      graphLoading.value = false;
+    }
+    loadGraphData();
+
+
+    document.title = "Lista delle esperienze";
 
     return {
       userFullName,
@@ -878,6 +936,11 @@ export default {
       closeFilterDialog,
       isFilterDialogOpen,
       error,
+      graphLoading,
+      graphError,
+      expTypeGraphData,
+      expCountryGraphData,
+      expTagGraphData
     };
   },
   beforeRouteEnter(to, _, next) {
@@ -1106,5 +1169,8 @@ table th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   position: relative;
+}
+.graph {
+  background-color: var(--itembackgroundColorList) !important;
 }
 </style>

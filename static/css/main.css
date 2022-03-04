@@ -9,7 +9,7 @@
   --backgroundColor: #ffffff;
   --inputColor: #ffffff;
   --fontColor: #000000;
-  --itembackgroundColorList: #f2f2f2;
+  --itembackgroundColorList: rgba(241, 241, 241, 0.95);
 }
 [data-theme="dark"] {
   --success: #334a35;
@@ -182,6 +182,9 @@ hr {
 .display-lg {
   display: none;
 }
+.d-flex {
+  display: flex;
+}
 @media screen and (min-width: 576px){
   .text-sm-left {
     text-align: left;
@@ -194,18 +197,17 @@ hr {
   .display-md {
     display: block;
   }
-  .display-lg {
-    display: block;
-  }
   .text-md-left {
     text-align: left;
   }
 }
 @media screen and (min-width: 992px) {
+  .display-lg {
+    display: block;
+  }
   .text-lg-left {
     text-align: left;
   }
-
   .text-lg-right {
     text-align: right;
   }
@@ -411,6 +413,15 @@ hr {
     max-width: 40%;
   }
 }
+/* Data Treatment */
+.data-treatment-box {
+  padding: 1rem;
+}
+
+.data-treatment-box .data-section {
+  margin: 0.2rem 0;
+}
+
 
 /* Forms */
 

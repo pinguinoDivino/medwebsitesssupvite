@@ -1,17 +1,17 @@
 <template>
-  <div class="row text-center">
-    <div class="col-md-6">
-      <h3>Istituto</h3>
+  <div class="row">
+    <div class="col-12">
+      <h3>Istituto:</h3>
       <span class="information">{{ attrs.istitution }}</span>
     </div>
-    <div class="col-md-6">
+    <div class="col-12">
       <h3>Si può scrivere la tesi?</h3>
       <div v-if="attrs.thesis === true" class="check"></div>
       <div v-else-if="attrs.thesis === false">No</div>
       <div v-else class="not-found"><p>Non disponibile</p></div>
     </div>
   </div>
-</template>
+</template>disponibile
 
 <script>
 export default {
@@ -20,6 +20,10 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  display: inline-block;
+  margin-right: 1rem;
+}
 .information {
   font-weight: bold;
   font-size: 1.3rem;

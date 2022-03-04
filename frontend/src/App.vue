@@ -183,4 +183,7 @@ input:checked + .slider:before {
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
 }
+span.swiper-pagination-bullet {
+  display: none !important;
+}
 </style>

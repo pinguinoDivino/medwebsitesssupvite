@@ -125,8 +125,6 @@ class Experience(BaseExp):
     img = models.ImageField(_('immagine'), upload_to="imgs/%Y/%m/%d", blank=True, null=True)
     ref = models.CharField(_('referente'), max_length=150,
                            help_text=_("referente a cui rivolgersi per effetturare l'esperienza "))
-    ref_email = models.CharField(_('email del referente'), max_length=150,
-                                 help_text=_("email del referente"), default="Non disponibile")
     type = models.CharField(_('tipo esperienza'), max_length=14, blank=True)
     group = models.CharField(_('gruppo'), max_length=6, default=generate_random_string(), blank=True, null=False)
 
@@ -167,7 +165,7 @@ class Experience(BaseExp):
         return "In corso"
 
     def get_absolute_url(self):
-        return r"/dettagli/%s" % format(self.slug)
+        return r"/esperienza/dettagli/%s" % format(self.slug)
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)

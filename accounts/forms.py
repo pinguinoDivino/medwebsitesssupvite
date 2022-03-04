@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import CustomUserManager, StudentAccount
+from accounts.models import CustomUserManager, StudentAccount, WhitelistEmail
 from core.utils import entry_year_generator, TUTORS
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model, password_validation
@@ -12,12 +12,13 @@ from django.forms import ValidationError
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from core.utils import titles_login as titles
 
 User = get_user_model()
 
 
 def create_username(first_name, last_name):
-    username = first_name.lower()[0][0] + '.' + last_name.lower()
+    username = first_name.lower().strip()[0][0] + '.' + last_name.lower().replace(" ", "")
     i = 1
     while 1 > 0:
         if User.objects.filter(username=username).exists():
@@ -29,7 +30,7 @@ def create_username(first_name, last_name):
 
 def validate_user_permissions(user):
     if user:
-        return True
+        return user.title in titles or user.is_staff or WhitelistEmail.objects.filter(email=user.email).exists()
     else:
         return False
 
@@ -68,6 +69,7 @@ class AuthentificationCustomForm(AuthenticationForm):
                 self.error_messages['blacklist'],
                 code='blacklist', )
         if user and not validate_user_permissions(user):
+            User.objects.filter(pk=user.username).delete()
             raise forms.ValidationError(
                 self.error_messages['unauthorized'],
                 code='inactive', )
@@ -156,7 +158,7 @@ class AccountActivationForm(forms.ModelForm):
                                    label='Anno accademico della immatricolazione a medicina')
     tutor = forms.ChoiceField(choices=TUTORS, required=True, label='Tutor')
 
-    data_treatment = forms.BooleanField(required=True, label="Accetti le condizioni")
+    data_treatment = forms.BooleanField(label="Accetti le condizioni", required=False)
 
     class Meta:
         model = StudentAccount
@@ -225,6 +227,7 @@ class ExStudentRegistrationForm(RegistrationForm):
         user.employeeType = 'Corso Ordinario Ciclo Unico 6 Anni (terminato)'
         user.ou = 'Cl. Sc. Sperimentali - Medicina'
         user.is_active = False
+        user.dpc = self.cleaned_data.get('data_treatment')
         if commit:
             user.save()
         try:
@@ -240,6 +243,7 @@ class ExStudentRegistrationForm(RegistrationForm):
             except StudentAccount.DoesNotExist:
                 is_account_created = False
 
+        WhitelistEmail.objects.create(email=user.email)
         staff_users = User.objects.filter(is_staff=True)
         subject = "Registrazione dell'ex-allievo %s %s al sito MEDSSSUP" \
                   % (user.first_name, user.last_name)

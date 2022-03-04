@@ -37,7 +37,7 @@ class ExperienceCreationAdminForm(forms.ModelForm):
     class Meta:
         model = Experience
         fields = (
-            'started_at', 'ended_at', 'type', "city", "description", "review", "indications", 'img', 'ref', 'ref_email',
+            'started_at', 'ended_at', 'type', "city", "description", "review", "indications", 'img', 'ref',
             'author', 'author_contact', 'tags', 'universities'
         )
 
@@ -70,7 +70,7 @@ class ExperienceChangeAdminForm(forms.ModelForm):
     class Meta:
         model = Experience
         fields = (
-            'started_at', 'ended_at', 'type', "city", "description", "review", "indications", 'img', 'ref', 'ref_email',
+            'started_at', 'ended_at', 'type', "city", "description", "review", "indications", 'img', 'ref',
             'author', 'author_contact', 'tags', 'universities'
         )
 
