@@ -3,8 +3,7 @@
 from . import *  # Import base settings from settings/__init__.py
 
 DEBUG = False
-ALLOWED_HOSTS = ['www.medexperiences.santannapisa.it', 'medexperiences.santannapisa.it',
-                 '193.205.80.230', '192.168.64.188']
+ALLOWED_HOSTS = env('SERVERNAMES').split(' ')
 
 STATIC_ROOT = '/home/f.leonetti/static-serve/'
 STATIC_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
