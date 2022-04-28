@@ -26,7 +26,7 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Informazioni aggiuntive', {'fields': ('is_user_disabled_by_school', 'dpc')})
     )
 
-    readonly_fields = ['date_joined', 'last_login', 'dpc']
+    readonly_fields = ['date_joined', 'last_login']
 
     add_fieldsets = (
         ("User", {

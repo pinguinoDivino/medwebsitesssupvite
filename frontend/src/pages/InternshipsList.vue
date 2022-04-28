@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 text-center text-lg-left">
+      <div class="col-12 text-left">
         <h1>Tirocini curriculari</h1>
       </div>
     </div>
@@ -470,6 +470,7 @@ export default {
     function closeFilterDialog() {
       isFilterDialogOpen.value = false;
     }
+
 
     document.title = "Lista dei tirocini";
 

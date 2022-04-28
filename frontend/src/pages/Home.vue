@@ -271,13 +271,11 @@ export default {
           "/static/img/frontend/home/internship2.jpeg",
           "/static/img/frontend/home/internship1.jpeg");
     });
-
     const congressSrc = computed(function () {
       return srcByWidth(
           "/static/img/frontend/home/congress2.jpeg",
           "/static/img/frontend/home/congress1.jpeg");
     });
-
     const summerschoolSrc = computed(function () {
       return srcByWidth(
           "/static/img/frontend/home/summerschool2.jpeg",

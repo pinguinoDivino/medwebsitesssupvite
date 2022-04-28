@@ -68,86 +68,86 @@
           <hr/>
           <h2>Valutazioni</h2>
           <div class="row">
-                <div class="col-lg-6">
-                  <h3>Globale</h3>
-                  <star-rating
-                      :read-only="true"
-                      :rating="exp.rating.global_r"
-                      :max-rating="10"
-                      :star-size="starSize"
-                      :inline="true"
-                      :border-width="0"
-                      :show-rating="false"
-                      active-color="#f56300"
-                  >
-                  </star-rating>
-                </div>
-                <div class="col-lg-6">
-                  <h3>Luogo</h3>
-                  <star-rating
-                      :read-only="true"
-                      :rating="exp.rating.stay_r"
-                      :max-rating="10"
-                      :star-size="starSize"
-                      :inline="true"
-                      :border-width="0"
-                      :show-rating="false"
-                      active-color="#f56300"
-                  >
-                  </star-rating>
-                </div>
-                <div class="col-lg-6">
-                  <h3>Conoscenze</h3>
-                  <star-rating
-                      :read-only="true"
-                      :rating="exp.rating.aquired_knowledge_r"
-                      :max-rating="10"
-                      :star-size="starSize"
-                      :border-width="0"
-                      :inline="true"
-                      :show-rating="false"
-                      active-color="#f56300"
-                  >
-                  </star-rating>
-                </div>
-                <div class="col-lg-6">
-                  <h3>Coinvolgimento</h3>
-                  <star-rating
-                      :read-only="true"
-                      :rating="exp.rating.involvement_r"
-                      :max-rating="10"
-                      :star-size="starSize"
-                      :border-width="0"
-                      :inline="true"
-                      :show-rating="false"
-                      active-color="#f56300"
-                  >
-                  </star-rating>
-                </div>
-              </div>
+            <div class="col-lg-6">
+              <h3>Globale</h3>
+              <star-rating
+                  :read-only="true"
+                  :rating="exp.rating.global_r"
+                  :max-rating="10"
+                  :star-size="starSize"
+                  :inline="true"
+                  :border-width="0"
+                  :show-rating="false"
+                  active-color="#f56300"
+              >
+              </star-rating>
+            </div>
+            <div class="col-lg-6">
+              <h3>Luogo</h3>
+              <star-rating
+                  :read-only="true"
+                  :rating="exp.rating.stay_r"
+                  :max-rating="10"
+                  :star-size="starSize"
+                  :inline="true"
+                  :border-width="0"
+                  :show-rating="false"
+                  active-color="#f56300"
+              >
+              </star-rating>
+            </div>
+            <div class="col-lg-6">
+              <h3>Conoscenze</h3>
+              <star-rating
+                  :read-only="true"
+                  :rating="exp.rating.aquired_knowledge_r"
+                  :max-rating="10"
+                  :star-size="starSize"
+                  :border-width="0"
+                  :inline="true"
+                  :show-rating="false"
+                  active-color="#f56300"
+              >
+              </star-rating>
+            </div>
+            <div class="col-lg-6">
+              <h3>Coinvolgimento</h3>
+              <star-rating
+                  :read-only="true"
+                  :rating="exp.rating.involvement_r"
+                  :max-rating="10"
+                  :star-size="starSize"
+                  :border-width="0"
+                  :inline="true"
+                  :show-rating="false"
+                  active-color="#f56300"
+              >
+              </star-rating>
+            </div>
+          </div>
           <h2>Altre informazioni</h2>
           <component :is="component" :attrs="exp.attrs" class="row"/>
         </div>
         <div class="col-md-4 col-lg-3 text-center text-md-left grey shadow">
-              <div>
-                <h2>Quando?</h2>
-                <p>L'esperienza è iniziata il <strong>{{ sDate }}</strong></p>
-                <p v-if="exp.ended_at">E' conclusa il <strong>{{ eDate }}</strong> con una durata complessiva di
-                  <i>{{ duration }}</i></p>
-                <p v-else>L'esperienza <i class="not-found">non si è ancora conclusa</i></p>
-              </div>
-              <div>
-                <h2>Dove?</h2>
-                <p>Principalemente presso la città di <span class="city">{{ exp.city.city }}
+          <div>
+            <h2>Quando?</h2>
+            <p>L'esperienza è iniziata il <strong>{{ sDate }}</strong></p>
+            <p v-if="exp.ended_at">E' conclusa il <strong>{{ eDate }}</strong> con una durata complessiva di
+              <i>{{ duration }}</i></p>
+            <p v-else>L'esperienza <i class="not-found">non si è ancora conclusa</i></p>
+          </div>
+          <div>
+            <h2>Dove?</h2>
+            <p>Principalemente presso la città di <span class="city">{{ exp.city.city }}
                   </span>, {{ exp.city.country }}</p>
-              </div>
-              <div v-if="exp.universities.length > 0">
-                <h2>Collaborazioni con</h2>
-                <p v-for="university of exp.universities">
-                  <a :href="university.link" target="_blank">{{ university.name }}</a>
-                </p>
-              </div>
-            </div>
+          </div>
+          <div v-if="exp.universities.length > 0">
+            <h2>Collaborazioni con</h2>
+            <p v-for="university of exp.universities">
+              <a :href="university.link" target="_blank">{{ university.name }}</a>
+            </p>
+          </div>
+        </div>
       </section>
       <section class="row contacts-box text-center text-md-left">
         <div class="col-lg-7">
@@ -171,7 +171,7 @@
             Sono <span class="author">{{ exp.author }}</span>
           </p>
           <h3>A che anno sono?</h3>
-          <p v-if="exp.author_year === 'ex-allievo'">Sono un ex-allievo</p>
+          <p v-if="exp.author_year === 'Ex-Allievo'">Sono un ex-allievo</p>
           <p v-else>Sono al {{ exp.author_year }} anno</p>
           <h3>Come puoi contattarmi?</h3>
           <p>
@@ -410,6 +410,12 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
+.section1 p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
 .element {
   margin: 3rem 0;
 }
@@ -527,26 +533,32 @@ h1 {
 .section1 {
   margin-bottom: 0.5rem;
 }
+
 @media screen and (min-width: 768px) {
   .element {
     margin: 4rem;
   }
 }
+
 .grey {
   background-color: var(--itembackgroundColorList);
 }
+
 .city {
   color: var(--orange);
   font-weight: 800;
 }
+
 .fit-img {
   width: 100%;
   object-fit: cover;
 }
+
 .img-container {
   margin: 0;
   padding: 0;
 }
+
 @media screen and (min-width: 992px) {
   .img-container {
     max-width: 600px;

@@ -191,7 +191,6 @@ class StudentAccount(models.Model):
                                      help_text=_('anno di immatricolazione alla facoltà di medicina'))
     tutor = models.CharField(_('tutor'), max_length=30, blank=True, null=True)
     is_set_up = models.BooleanField(_('registrazione completa?'), default=False)
-
     objects = StudentAccountManager()
 
     class Meta:
@@ -240,3 +239,5 @@ class TutorAccount(models.Model):
     @property
     def tutees(self):
         return StudentAccount.objects.filter(tutor=self.user.username)
+
+

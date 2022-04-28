@@ -70,7 +70,7 @@
           </base-button>
           </div>
         </div>
-        <div class="row form-group" v-if="areExperiencesLoaded">
+        <div class="row form-group min-height" v-if="areExperiencesLoaded">
           <div class="col-12">
             <div class="display-md sidebar" id="mySidenav">
               <base-toggledown-element>
@@ -336,7 +336,7 @@
         </div>
       </div>
     </div>
-    <div class="row py-1">
+    <div class="row py-1 mt-md-4">
       <div class="col-12" v-if="graphLoading">
         <base-spinner></base-spinner>
       </div>
@@ -1044,10 +1044,10 @@ export default {
 
 .sidebar {
   height: 100%;
-  min-height: 80vh;
+  min-height: 35vh;
   width: 0;
   position: absolute;
-  z-index: 1;
+  z-index: 100;
   top: 0;
   left: 0;
   overflow-x: hidden;
@@ -1170,7 +1170,12 @@ table th {
   letter-spacing: 0.1em;
   position: relative;
 }
-.graph {
-  background-color: var(--itembackgroundColorList) !important;
+@media screen and (min-width: 768px) {
+  .mt-md-4 {
+    margin-top: 4rem;
+  }
+}
+.min-height {
+  min-height: 25vh;
 }
 </style>

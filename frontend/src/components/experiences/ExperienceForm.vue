@@ -786,52 +786,10 @@ export default {
     const ratingDiv = ref(null);
     const tagsDiv = ref(null);
 
-    function goto(refName) {
-      const element = eval(refName);
-      const top = element.value.offsetTop;
-      window.scrollTo(0, top - 10);
-    }
-
     function goToTop() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
-
-    function keyboardShortCuts(e) {
-      if (e.key === "r" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("reviewDiv");
-      } else if (e.key === "u" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("universitiesDiv");
-      } else if (e.key === "t" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("tagsDiv");
-      } else if (e.key === "c" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("cityDiv");
-      } else if (e.key === "v" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("ratingDiv");
-      } else if (e.key === "f" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("filesDiv");
-      } else if (e.key === "d" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("descDiv");
-      } else if (e.key === "i" && (e.altKey || e.metaKey)) {
-        e.preventDefault();
-        goto("firstDiv");
-      }
-    }
-
-    onMounted(() => {
-      document.addEventListener('keydown', keyboardShortCuts);
-    });
-    onBeforeUnmount(() => {
-      document.removeEventListener('keydown', keyboardShortCuts);
-    });
-
     document.title = props.pAct !== null && !props.asModel ? "Modifica esperienza" : "Aggiungi esperienza";
 
     return {

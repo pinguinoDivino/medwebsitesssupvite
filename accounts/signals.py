@@ -12,8 +12,9 @@ post_signal = Signal(providing_args=['sender', 'instance', 'change', 'updatedfie
 
 @receiver(post_save, sender=CustomUser)
 def create_account(sender, instance, created, **kwargs):
-    if instance.username in [x[0] for x in TUTORS] and not TutorAccount.objects.filter(user=instance).exists():
-        TutorAccount.objects.create(user=instance)
+    if instance.username in [x[0] for x in TUTORS]:
+        if not TutorAccount.objects.filter(user=instance).exists():
+            TutorAccount.objects.create(user=instance)
     else:
         sector = None
         if instance.ou in SECTOR_DICT:

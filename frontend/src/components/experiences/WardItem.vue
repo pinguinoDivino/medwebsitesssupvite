@@ -4,10 +4,10 @@
       <div class="ward-header" @click="toggleContent">
         <h3>{{ ward }}</h3>
       </div>
-        <div v-if="isShow" class="animation">
-          <div class="ward-body">
-            <transition-group name="list">
-              <div v-for="internship of internships" class="review-container" :key="internship.id">
+      <div v-if="isShow" class="animation">
+        <div class="ward-body">
+          <transition-group name="list">
+            <div v-for="internship of internships" class="review-container" :key="internship.id">
               <div class="review-header">
                 <p>di <span class="bold">{{ internship.author }}</span>, svolta al {{ func2(internship.academic_year) }}
                   anno</p>
@@ -30,12 +30,12 @@
               </div>
               <hr/>
             </div>
-            </transition-group>
-          </div>
-          <div class="ward-footer pb-1">
-            <base-button mode="default" @click="hideContent">Chiudi</base-button>
-          </div>
+          </transition-group>
         </div>
+        <div class="ward-footer pb-1">
+          <base-button mode="default" @click="hideContent">Chiudi</base-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -72,9 +72,14 @@ export default {
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 0.95; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.95;
+  }
 }
+
 .animation {
   animation: fadein 0.8s;
 }
@@ -103,28 +108,34 @@ export default {
     margin-left: auto;
   }
 }
+
 .list-enter-active,
 .list-leave-active,
 .list-move {
   transition: 500ms cubic-bezier(0.64, 0.26, 0.08, 1.03);
   transition-property: opacity, transform;
 }
+
 .list-enter {
   opacity: 0;
   transform: translateY(50px) scaleY(0.5);
 }
+
 .list-enter-to {
   opacity: 1;
   transform: translateX(0) scaleY(1);
 }
+
 .list-leave-active {
   position: absolute;
   opacity: 0;
   transform: scaleY(0);
 }
+
 h3:hover {
   transform: scale(1.02);
 }
+
 .ward-footer {
   font-size: 0.8rem;
 }
