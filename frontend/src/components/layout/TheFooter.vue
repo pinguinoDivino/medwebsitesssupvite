@@ -6,7 +6,7 @@
           <a href="/amministrazione/pannello/">Admin</a>
         </div>
         <div class="mb-1">
-          <a target="_blank" href="/accounts/trattamento-dati/">Trattamento dati</a>
+          <a target="_blank" rel="noopener noreferrer" href="/accounts/trattamento-dati/">Trattamento dati</a>
         </div>
         <span>Copyright &copy; Scuola Superiore Sant'Anna 2022</span>
       </div>
