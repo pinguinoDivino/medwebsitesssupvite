@@ -11,6 +11,8 @@ export default {
         isAuth1: response.data.is_auth1,
         isAuth2: response.data.is_auth2,
         isAuth3: response.data.is_auth3,
+        isAuth4: response.data.is_auth4,
+        isAuth5: response.data.is_auth5,
         dpc: response.data.dpc,
         isStaff: response.data.is_staff,
       });

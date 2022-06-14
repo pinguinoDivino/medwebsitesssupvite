@@ -15,6 +15,7 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     is_auth2 = serializers.SerializerMethodField(read_only=True)
     is_auth3 = serializers.SerializerMethodField(read_only=True)
     is_auth4 = serializers.SerializerMethodField(read_only=True)
+    is_auth5 = serializers.SerializerMethodField(read_only=True)
     is_staff = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -41,6 +42,9 @@ class UserDisplaySerializer(serializers.ModelSerializer):
 
     def get_is_auth4(self, instance):
         return instance.is_auth4
+
+    def get_is_auth5(self, instance):
+        return instance.is_auth5
 
     def get_is_staff(self, instance):
         return instance.is_staff

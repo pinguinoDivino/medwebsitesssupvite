@@ -5,7 +5,7 @@ export default {
   userFullName(state) {
     return state.userFullName;
   },
-  userEmail(state){
+  userEmail(state) {
     return state.userEmail
   },
   userIsAuth1(state) {
@@ -17,7 +17,13 @@ export default {
   userIsAuth3(state) {
     return state.userIsAuth3;
   },
-  userDpc(state){
+  userIsAuth4(state) {
+    return state.userIsAuth4;
+  },
+  userIsAuth5(state) {
+    return state.userIsAuth5;
+  },
+  userDpc(state) {
     return state.userDpc;
   },
   userIsStaff(state) {
@@ -26,7 +32,7 @@ export default {
   theme(state) {
     return state.theme;
   },
-  animated(state){
+  animated(state) {
     return state.animated;
   }
 };

@@ -25,7 +25,7 @@
     </tbody>
 </table>
 <h3>Effettua il login cliccando il
-    <a href="{{ request.scheme }}://{{ request.get_host }}{% url "accounts:login" %}">link</a>
+    <a href="https://{{ request.get_host }}{% url 'accounts:login' %}">link</a>
 </h3>
 </body>
 </html>

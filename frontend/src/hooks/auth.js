@@ -20,6 +20,12 @@ export default function useAuth() {
   const userIsAuth3 = computed(function() {
     return store.getters.userIsAuth3;
   });
+  const userIsAuth4 = computed(function() {
+    return store.getters.userIsAuth4;
+  });
+  const userIsAuth5 = computed(function() {
+    return store.getters.userIsAuth5;
+  });
   const userDpc = computed(function() {
     return store.getters.userDpc;
   });
@@ -36,6 +42,8 @@ export default function useAuth() {
     userIsAuth1,
     userIsAuth2,
     userIsAuth3,
+    userIsAuth4,
+    userIsAuth5,
     userIsStaff,
     userDpc,
     theme

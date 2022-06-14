@@ -10,6 +10,8 @@ export default {
     userIsAuth1: false,
     userIsAuth2: false,
     userIsAuth3: false,
+    userIsAuth4: false,
+    userIsAuth5: false,
     userIsStaff: false,
     userDpc: false,
     theme: "light",

@@ -11,6 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
+USER_GROUP_DIARY = 'Rappset'
+
 
 class CustomUserManager(UserManager):
     def create_superuser(self, username, email=None, password=None, **extra_fields):
@@ -167,6 +169,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if self.is_superuser:
             return True
         return TutorAccount.objects.filter(user=self).exists()
+
+    @property
+    def is_auth5(self):  # rappset options
+        if self.is_superuser:
+            return True
+        return self.groups.filter(name=USER_GROUP_DIARY).exists()
 
 
 class WhitelistEmail(models.Model):

@@ -38,7 +38,7 @@ function setPropOfObjInList(list, property, value, selectProp, selectValue) {
 
 function sortNestedArrayByObjectProperty(arr, property) {
   for (const item of arr) {
-    item.sort(function(a, b) {
+    item.sort(function (a, b) {
       if (a[property] < b[property]) {
         return 1;
       }
@@ -86,6 +86,7 @@ const capitalize = s => {
   if (typeof s !== "string") return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
 function renameObjProperty(o, old_key, new_key) {
   if (old_key !== new_key) {
     Object.defineProperty(
@@ -96,6 +97,7 @@ function renameObjProperty(o, old_key, new_key) {
     delete o[old_key];
   }
 }
+
 function getProp(obj, propName) {
   const parts = propName.split(".");
 
@@ -104,6 +106,13 @@ function getProp(obj, propName) {
   }
   return obj;
 }
+
+function linkify(inputText) {
+  const URLMatcher = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm
+
+  return inputText.replace(URLMatcher, match => `<a href="${match}" target="_blank">${match}</a>`)
+}
+
 
 export {
   removeItemOnce,
@@ -116,5 +125,6 @@ export {
   getProp,
   moveObjFromList1ToList2,
   setPropOfObjInList,
-  renameObjProperty
+  renameObjProperty,
+  linkify
 };

@@ -150,7 +150,7 @@ export default function getCountryName(country) {
   } else if (country === "SV") {
     return "El Salvador";
   } else if (country === "UK") {
-    return "England";
+    return "United Kingdom";
   } else if (country === "GQ") {
     return "Equatorial Guinea";
   } else if (country === "ER") {

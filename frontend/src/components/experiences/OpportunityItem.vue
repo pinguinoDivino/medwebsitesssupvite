@@ -21,7 +21,7 @@
                  title="Descrizione">
       <template v-slot:default>
         <div class="text-center">
-          <p>{{ opp.description }}</p>
+          <p v-html="linkify(opp.description)"></p>
         </div>
       </template>
     </base-dialog>
@@ -31,8 +31,11 @@
 <script>
 import {computed, ref} from "vue";
 import {useGoodDateFormat} from "../../hooks/dates.js";
+import {linkify} from "../../hooks/baseFunctions";
+
 
 export default {
+
   props: ["opp"],
   setup(props) {
     const isShown = ref(false);
@@ -50,7 +53,8 @@ export default {
     return {
       isShown,
       added,
-      toggleDialog
+      toggleDialog,
+      linkify
     };
   }
 };

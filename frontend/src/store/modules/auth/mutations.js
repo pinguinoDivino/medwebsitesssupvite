@@ -6,6 +6,8 @@ export default {
     state.userIsAuth1 = payload.isAuth1;
     state.userIsAuth2 = payload.isAuth2;
     state.userIsAuth3 = payload.isAuth3;
+    state.userIsAuth4 = payload.isAuth4;
+    state.userIsAuth5 = payload.isAuth5;
     state.userDpc = payload.dpc;
     state.userIsStaff = payload.isStaff;
   },

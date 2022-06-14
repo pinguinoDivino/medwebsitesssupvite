@@ -2,6 +2,9 @@
   <footer class="sticky-footer">
     <div class="container-fluid my-auto">
       <div class="copyright text-center my-auto">
+        <div v-if="userIsAuth1" class="mb-1">
+          <router-link :to="{ name: 'diaries-list' }">Diari</router-link>
+        </div>
         <div class="mb-1" v-if="userIsStaff" onclick="location.href = '/amministrazione/pannello/';" @click.stop>
           <a href="/amministrazione/pannello/">Admin</a>
         </div>
@@ -17,8 +20,8 @@
 import useAuth from "../../hooks/auth.js";
 export default {
   setup(){
-    const {userIsStaff} = useAuth();
-    return {userIsStaff}
+    const {userIsStaff, userIsAuth1} = useAuth();
+    return {userIsStaff, userIsAuth1}
   }
 }
 </script>
