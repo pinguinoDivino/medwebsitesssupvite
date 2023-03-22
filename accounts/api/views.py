@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, ListAPIView
 from rest_framework.response import Response
-from accounts.api.serializers import UserDisplaySerializer, UserUpdateDpcSerializer, TutorAccountDisplaySerializer
-from core.utils import TUTORS
-from .permissions import IsTutor
+from accounts.api.serializers import UserDisplaySerializer, UserUpdateDpcSerializer, \
+    FacultyMemberDisplaySerializer
+from accounts.api.permissions import IsFacultyMember
+from accounts.models import FacultyMember
 
 User = get_user_model()
 
@@ -15,9 +16,9 @@ class CurrentUser(APIView):
         return Response(serializer.data)
 
 
-class TutorListApiView(APIView):
-    def get(self, request, format=None):
-        return Response(TUTORS)
+class FacultyMemberListApiView(ListAPIView):
+    serializer_class = FacultyMemberDisplaySerializer
+    queryset = FacultyMember.objects.all()
 
 
 class UserUpdateDpcView(UpdateAPIView):
@@ -27,9 +28,9 @@ class UserUpdateDpcView(UpdateAPIView):
         return self.request.user
 
 
-class TutorInformation(APIView):
-    permission_classes = [IsTutor, ]
+class FacultyMemberInformation(APIView):
+    permission_classes = [IsFacultyMember, ]
 
     def get(self, request):
-        serializer = TutorAccountDisplaySerializer(request.user.tutor)
+        serializer = FacultyMemberDisplaySerializer(request.user.faculty_member)
         return Response(serializer.data)

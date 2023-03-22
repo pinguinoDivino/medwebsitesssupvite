@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'experiences',
-    'communications'
+    'courses'
 ]
 
 MIDDLEWARE = [
@@ -141,7 +141,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'accounts:setup'
-LOGOUT_REDIRECT_URL = 'entry-point'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 # Django Rest-Framework
 

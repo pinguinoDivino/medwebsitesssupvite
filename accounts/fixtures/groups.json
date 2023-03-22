@@ -10,5 +10,11 @@
         "fields": {
             "name": "Rappset"
         }
+    },
+    {
+        "model": "auth.group",
+        "fields": {
+            "name": "Blacklist"
+        }
     }
 ]

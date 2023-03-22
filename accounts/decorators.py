@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import user_passes_test
-from .models import StudentAccount, TutorAccount
+from .models import StudentAccount, FacultyMember
 
 
 def setting_up_account(user):
     if user:
         if user.is_authenticated:
-            if TutorAccount.objects.filter(user=user).exists():
+            if FacultyMember.objects.filter(user=user).exists():
                 return False
             if StudentAccount.objects.filter(user=user).exists():
                 return not StudentAccount.objects.get(user=user).is_set_up

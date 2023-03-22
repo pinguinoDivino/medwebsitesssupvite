@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.views.generic import UpdateView
 from .decorators import complete_decorator
-from .forms import AccountActivationForm, ExStudentRegistrationForm, AuthentificationCustomForm
+from .forms import AccountActivationForm, ExStudentRegistrationForm, AuthenticationCustomForm
 from .models import StudentAccount
 from django_registration.views import RegistrationView
 from django.views.generic.base import TemplateView
@@ -30,7 +30,7 @@ class ExStudentRegistrationView(RegistrationView):
 class LoginCustomView(LoginView):
     template_name = 'accounts/login.html'
     redirect_field_name = 'accounts:setup'
-    authentication_form = AuthentificationCustomForm
+    authentication_form = AuthenticationCustomForm
 
 
 @method_decorator(complete_decorator, 'dispatch')

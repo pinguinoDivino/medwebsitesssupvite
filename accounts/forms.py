@@ -1,6 +1,6 @@
 from django import forms
-from accounts.models import CustomUserManager, StudentAccount, WhitelistEmail
-from core.utils import entry_year_generator, TUTORS
+from accounts.models import CustomUserManager, StudentAccount, WhitelistEmail, FacultyMember
+from core.utils import entry_year_generator, create_username
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.models import Group
@@ -17,8 +17,8 @@ from core.utils import titles_login as titles
 User = get_user_model()
 
 
-def create_username(first_name, last_name):
-    username = first_name.lower().strip()[0][0] + '.' + last_name.lower().replace(" ", "")
+def create_unique_username(first_name, last_name):
+    username = create_username(first_name, last_name)
     i = 1
     while 1 > 0:
         if User.objects.filter(username=username).exists():
@@ -35,7 +35,7 @@ def validate_user_permissions(user):
         return False
 
 
-class AuthentificationCustomForm(AuthenticationForm):
+class AuthenticationCustomForm(AuthenticationForm):
     error_messages = {
         'invalid_login': _(
             "Nome utente e password invalidi"
@@ -90,16 +90,6 @@ class UserAdminCreationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
-    def clean(self):
-        password = self.clean_password2()
-        username = self.clean_username()
-        email = self.clean_email()
-        if password:
-            try:
-                password_validation.validate_password(password, self.instance)
-            except forms.ValidationError as error:
-                self.add_error('password1', error)
-
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
@@ -112,6 +102,18 @@ class UserAdminCreationForm(forms.ModelForm):
         if User.objects.filter(email=email_n).exists():
             raise ValidationError("This email is just taken")
         return email
+
+    def clean(self):
+        password = self.clean_password2()
+        username = self.clean_username()
+        email = self.clean_email()
+        if password:
+            try:
+                password_validation.validate_password(password, self.instance)
+            except forms.ValidationError as error:
+                self.add_error('password1', error)
+
+        super(UserAdminCreationForm, self).clean()
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -156,7 +158,7 @@ class UserAdminChangeForm(forms.ModelForm):
 class AccountActivationForm(forms.ModelForm):
     entry_year = forms.ChoiceField(choices=entry_year_generator(), required=True,
                                    label='Anno accademico della immatricolazione a medicina')
-    tutor = forms.ChoiceField(choices=TUTORS, required=True, label='Tutor')
+    tutor = forms.ChoiceField(choices=[], required=True, label='Tutor')
 
     data_treatment = forms.BooleanField(label="Accetti le condizioni", required=False)
 
@@ -167,11 +169,13 @@ class AccountActivationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AccountActivationForm, self).__init__(*args, **kwargs)
         self.fields['entry_year'].choices = entry_year_generator()
-        self.fields['tutor'].choices = TUTORS
+        self.fields['tutor'].choices = FacultyMember.objects.list()
 
     def clean(self):
         if not self.cleaned_data.get('data_treatment'):
             raise forms.ValidationError("Devi accettare le condizioni per proseguire")
+
+        super(AccountActivationForm, self).clean()
 
 
 class ExStudentRegistrationForm(RegistrationForm):
@@ -185,7 +189,7 @@ class ExStudentRegistrationForm(RegistrationForm):
 
     entry_year = forms.ChoiceField(choices=entry_year_generator(6), required=True,
                                    label='Anno accademico della immatricolazione a medicina')
-    tutor = forms.ChoiceField(choices=TUTORS, required=True, label='Tutor')
+    tutor = forms.ChoiceField(choices=[], required=True, label='Tutor')
 
     data_treatment = forms.BooleanField(required=True, label="Accetti le condizioni")
 
@@ -197,7 +201,7 @@ class ExStudentRegistrationForm(RegistrationForm):
         self.request = kwargs.pop("request")
         super(ExStudentRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['entry_year'].choices = entry_year_generator(6)
-        self.fields['tutor'].choices = TUTORS
+        self.fields['tutor'].choices = FacultyMember.objects.list()
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -213,6 +217,8 @@ class ExStudentRegistrationForm(RegistrationForm):
 
         if not self.cleaned_data.get('data_treatment'):
             raise forms.ValidationError("Devi accettare le condizioni per proseguire")
+
+        super(ExStudentRegistrationForm, self).clean()
 
     def save(self, commit=True):
         is_account_created = True

@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsTutor(permissions.BasePermission):
+class IsFacultyMember(permissions.BasePermission):
     message = "Autorizzazione non concessa"
 
     def has_permission(self, request, view):

@@ -10,8 +10,7 @@ from django.contrib.auth.models import AbstractBaseUser, UserManager, Permission
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
-
-USER_GROUP_DIARY = 'Rappset'
+from accounts.choices import SSDs
 
 
 class CustomUserManager(UserManager):
@@ -50,7 +49,8 @@ class StudentAccountManager(models.Manager):
         account.is_set_up = True
         account.save()
 
-    def complete(self, user, entry_year, tutor):
+    @staticmethod
+    def complete(user, entry_year, tutor):
         account = user.account
         if account.is_set_up:
             raise ValueError("L'account %s è già stato configurato".format(account))
@@ -60,14 +60,9 @@ class StudentAccountManager(models.Manager):
         account.save()
 
 
-class TutorAccountManager(models.Manager):
-    def create(self, user):
-        if TutorAccount.objects.filter(user=user).exists():
-            raise IntegrityError()
-        account = self.model(user=user)
-        account.save(using=self._db)
-        account.save()
-        return account
+class FacultyMemberManager(models.Manager):
+    def list(self):
+        return [[x.email, x.__str__] for x in self.all()]
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -162,19 +157,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def is_auth3(self):  # w-opportunities
         if self.is_superuser:
             return True
-        return TutorAccount.objects.filter(user=self).exists() or self.groups.filter(name="Recruiter").exists()
+        return FacultyMember.objects.filter(user=self).exists() or self.groups.filter(name="Recruiter").exists()
 
     @property
-    def is_auth4(self):  # tutees options
+    def is_auth4(self):  # tutees and courses options
         if self.is_superuser:
             return True
-        return TutorAccount.objects.filter(user=self).exists()
-
-    @property
-    def is_auth5(self):  # rappset options
-        if self.is_superuser:
-            return True
-        return self.groups.filter(name=USER_GROUP_DIARY).exists()
+        return FacultyMember.objects.filter(user=self).exists()
 
 
 class WhitelistEmail(models.Model):
@@ -197,7 +186,7 @@ class StudentAccount(models.Model):
     entry_year = models.IntegerField(_('anno accademico della immatricolazione a medicina'),
                                      blank=True, null=True,
                                      help_text=_('anno di immatricolazione alla facoltà di medicina'))
-    tutor = models.CharField(_('tutor'), max_length=30, blank=True, null=True)
+    tutor = models.CharField(_('tutor'), max_length=300, blank=True, null=True)
     is_set_up = models.BooleanField(_('registrazione completa?'), default=False)
     objects = StudentAccountManager()
 
@@ -230,22 +219,30 @@ class StudentAccount(models.Model):
         return self.get_year()
 
 
-class TutorAccount(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tutor',
-                                primary_key=True, verbose_name='user')
+class FacultyMember(models.Model):
+    first_name = models.CharField(_('nome'), max_length=30)
+    last_name = models.CharField(_('cognome'),max_length=40)
+    email = models.EmailField(_('email'), max_length=300, unique=True)
+    ssd = models.CharField(_('SSD'), choices=SSDs, max_length=20)
 
-    objects = TutorAccountManager()
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='faculty_member',
+                                verbose_name='user', blank=True, null=True)
+
+    objects = FacultyMemberManager()
 
     class Meta:
-        db_table = 'tutors'
-        verbose_name = 'tutor'
-        verbose_name_plural = 'tutors'
+        db_table = "faculty_member"
+        unique_together = ('first_name', 'last_name')
+        verbose_name = "Professore"
+        verbose_name_plural = "Professori"
 
     def __str__(self):
-        return self.user.__str__()
+        return "{} {}".format(self.first_name, self.last_name)
 
     @property
     def tutees(self):
-        return StudentAccount.objects.filter(tutor=self.user.username)
+        return StudentAccount.objects.filter(tutor=self.email)
+
+
 
 

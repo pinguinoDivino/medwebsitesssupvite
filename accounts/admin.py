@@ -3,7 +3,7 @@ import types
 from django.contrib import admin
 from django.contrib.admin.forms import AdminAuthenticationForm
 
-from .models import CustomUser, WhitelistEmail, StudentAccount, TutorAccount
+from .models import FacultyMember, CustomUser, WhitelistEmail, StudentAccount
 from .forms import UserAdminChangeForm, UserAdminCreationForm, GroupAdminForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
@@ -75,10 +75,14 @@ class StudentAccountAdmin(admin.ModelAdmin):
     readonly_fields = ('get_year', 'get_entry_year')
 
 
-class TutorAccountAdmin(admin.ModelAdmin):
-    list_display = ('user',)
+class FacultyMemberAccountAdmin(admin.ModelAdmin):
+    list_display = ('user', 'faculty_member')
 
     search_fields = ('user__username',)
+
+
+class FacultyMemberAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "email", "ssd"]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
@@ -86,8 +90,7 @@ admin.site.register(WhitelistEmail)
 admin.site.unregister(Group)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(StudentAccount, StudentAccountAdmin)
-admin.site.register(TutorAccount, TutorAccountAdmin)
-
+admin.site.register(FacultyMember, FacultyMemberAdmin)
 
 # override default admin site
 

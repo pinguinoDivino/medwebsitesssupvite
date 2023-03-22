@@ -1,7 +1,7 @@
 import locale
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from ..models import StudentAccount, TutorAccount
+from ..models import StudentAccount, FacultyMember
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 User = get_user_model()
@@ -15,7 +15,6 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     is_auth2 = serializers.SerializerMethodField(read_only=True)
     is_auth3 = serializers.SerializerMethodField(read_only=True)
     is_auth4 = serializers.SerializerMethodField(read_only=True)
-    is_auth5 = serializers.SerializerMethodField(read_only=True)
     is_staff = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -43,9 +42,6 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     def get_is_auth4(self, instance):
         return instance.is_auth4
 
-    def get_is_auth5(self, instance):
-        return instance.is_auth5
-
     def get_is_staff(self, instance):
         return instance.is_staff
 
@@ -68,17 +64,16 @@ class StudentAccountDisplaySerializer(serializers.ModelSerializer):
         return instance.user.get_full_name()
 
 
-class TutorAccountDisplaySerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)
+class FacultyMemberDisplaySerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField(read_only=True)
     tutee_list = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = TutorAccount
+        model = FacultyMember
         fields = '__all__'
 
     def get_full_name(self, instance):
-        return instance.user.get_full_name()
+        return instance.__str__()
 
     def get_tutee_list(self, instance):
-        return {x.username: x.get_full_name() for x in instance.tutees}
+        return [{x.user.get_full_name(): x.user.email} for x in instance.tutees]

@@ -1,8 +1,8 @@
 from django.db.models.signals import post_save
 import logging
 from django.dispatch import receiver, Signal
-from core.utils import SECTOR_DICT, TUTORS
-from accounts.models import StudentAccount, CustomUser, TutorAccount
+from core.utils import SECTOR_DICT
+from accounts.models import StudentAccount, CustomUser, FacultyMember
 from core.utils import sector as s, title_default as td
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -12,9 +12,11 @@ post_signal = Signal(providing_args=['sender', 'instance', 'change', 'updatedfie
 
 @receiver(post_save, sender=CustomUser)
 def create_account(sender, instance, created, **kwargs):
-    if instance.username in [x[0] for x in TUTORS]:
-        if not TutorAccount.objects.filter(user=instance).exists():
-            TutorAccount.objects.create(user=instance)
+    if instance.email in FacultyMember.objects.all().values_list('email', flat=True):
+        faculty_member = FacultyMember.objects.get(email=instance.email)
+        if not faculty_member.user:
+            faculty_member.user = instance
+            faculty_member.save()
     else:
         sector = None
         if instance.ou in SECTOR_DICT:
@@ -27,7 +29,7 @@ def create_account(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=CustomUser)
 def save_account(sender, instance, **kwargs):
-    if SECTOR_DICT[instance.ou] == s and StudentAccount.objects.filter(user=instance).exists():
+    if instance.ou in SECTOR_DICT.keys() and SECTOR_DICT[instance.ou] == s and StudentAccount.objects.filter(user=instance).exists():
         instance.student.save()
 
 

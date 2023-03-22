@@ -4,7 +4,7 @@ from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import filters
-from accounts.api.permissions import IsTutor
+from accounts.api.permissions import IsFacultyMember
 from experiences.api.filters import experience_filter, DynamicSearchFilter, DynamicSearchOpportunityFilter, \
     opportunity_filter, DynamicSearchInternshipFilter, internship_filter
 from experiences.api.pagination import StandardResultsSetPagination, StandardOpportunitiesResultsSetPagination, \
@@ -292,7 +292,7 @@ class ExperienceTagGraphDataApiView(views.APIView):
 
 
 class ExperiencesTutorDashboard(views.APIView):
-    permission_classes = [IsTutor, ]
+    permission_classes = [IsFacultyMember, ]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -20,9 +20,6 @@ export default {
   userIsAuth4(state) {
     return state.userIsAuth4;
   },
-  userIsAuth5(state) {
-    return state.userIsAuth5;
-  },
   userDpc(state) {
     return state.userDpc;
   },

@@ -40,18 +40,6 @@ SECTOR_DICT = {
     'Amministratore sito': 'admin',
 }
 
-TUTORS = (
-    ('c.passino', 'Claudio Passino'),
-    ('m.emdin', 'Michele Emdin'),
-    ('v.lionetti', 'Vincenzo Lionetti'),
-    ('m.meola', 'Mario Meola'),
-    ('fa.recchia', 'Fabio Anastasio Recchia'),
-    ('f.coceani', 'Flavio Coceani'),
-    ('a.debora', 'Debora Angeloni'),
-    ('a.giannoni', 'Alberto Giannoni'),
-    #  ('f.leonetti', 'Filippo Leonetti')
-)
-
 YEAR_DICT = {
     '1': 'I',
     '2': 'II',
@@ -160,3 +148,10 @@ def switcher(obj, attrs1, attrs2, attrs3):
         return attrs3
     else:
         raise ValueError("Errore sconosciuto")
+
+
+def create_username(first_name, last_name):
+    first_part = ""
+    for name in first_name.split(" "):
+        first_part = ''.join([first_part, str(name)[0]])
+    return (first_part + "." + last_name.replace(" ", "")).lower()

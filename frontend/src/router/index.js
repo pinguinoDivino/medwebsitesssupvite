@@ -19,10 +19,6 @@ const InternshipsList = () =>
 const ExperienceDetail = () =>
   import("../pages/ExperienceDetail.vue");
 
-const DiariesList = () => import("../pages/DiariesList.vue");
-
-const DiaryDetail = () => import("../pages/DiaryDetail.vue");
-
 const PersonalPage = () =>
   import("../pages/PersonalPage.vue");
 
@@ -78,25 +74,6 @@ const routes = [
     component: ExperienceDetail,
     meta: {
       requiresDpc: true
-    }
-  },
-  {
-    path: "/diari/elenco",
-    name: "diaries-list",
-    component: DiariesList,
-    meta: {
-      requiresDpc: true,
-      requiresAuth1: true
-    }
-  },
-  {
-    path: "/diario/dettagli/:id",
-    name: "diary-detail",
-    props: true,
-    component: DiaryDetail,
-    meta: {
-      requiresDpc: true,
-      requiresAuth1: true
     }
   },
   {
