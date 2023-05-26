@@ -58,7 +58,7 @@ function useGoodDateFormat() {
 
 function useGoodDatePeriodFormat() {
   function getGoodDatePeriodFormat(date) {
-    const mounths = [
+    const months = [
       "gennaio",
       "febbraio",
       "marzo",
@@ -73,7 +73,7 @@ function useGoodDatePeriodFormat() {
       "dicembre"
     ];
     const els = date.split("-");
-    return mounths[els[1] - 1] + " " + els[0];
+    return months[els[1] - 1] + " " + els[0];
   }
 
   return { getGoodDatePeriodFormat };

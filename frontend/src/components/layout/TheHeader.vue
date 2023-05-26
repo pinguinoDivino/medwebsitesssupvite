@@ -56,7 +56,7 @@ export default {
       const x = document.getElementById("menu");
       x.classList.add("open");
     }
-    const { userIsAuth1, userIsAuth2 } = useAuth();
+    const { userIsAuth1 } = useAuth();
 
     function switchTheme(e) {
       if (e.target.checked) {
@@ -87,7 +87,6 @@ export default {
       switchTheme,
       currentTheme,
       userIsAuth1,
-      userIsAuth2,
     };
   }
 };
@@ -120,23 +119,20 @@ nav {
   height: 100%;
   margin-left: auto;
   background-color: inherit;
+  font-size: 1.3rem;
 }
 
 .navbar-logo {
   font-size: 2.5rem;
   margin-left: 1rem;
 }
-
+2
 a {
   text-decoration: none;
   color: var(--white);
   line-height: 1.23536;
   font-weight: 400;
   letter-spacing: -0.022em;
-}
-
-.menu {
-  font-size: 1.3rem;
 }
 
 a:active,

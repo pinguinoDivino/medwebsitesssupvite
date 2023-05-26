@@ -7,7 +7,7 @@ from core.utils import sector as s, title_default as td
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-post_signal = Signal(providing_args=['sender', 'instance', 'change', 'updatedfields', 'request'])
+post_signal = Signal()
 
 
 @receiver(post_save, sender=CustomUser)

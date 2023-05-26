@@ -38,7 +38,7 @@
           </div>
           <hr/>
           <div class="row element">
-            <div class="col-lg-4 subtitle-right">
+            <div class="col-lg-4">
               <div class="subtitleA">Recensione</div>
               <div class="subtitleB">A chi consiglio l'esperienza?</div>
               <div class="subtitleC">Persone interessate</div>

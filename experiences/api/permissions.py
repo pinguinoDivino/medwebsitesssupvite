@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from experiences.models import SfsLabErasmusAdditionalAttributes, \
-    CongressConferenceSummerSchoolAdditionalAttributes, InternshipAdditionalAttributes, Opportunity
+    CongressConferenceSummerSchoolAdditionalAttributes, InternshipAdditionalAttributes
 
 User = get_user_model()
 
@@ -12,9 +12,6 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-
-        if isinstance(obj, Opportunity):
-            return obj.author == request.user
 
         return obj.experience.author == request.user.student \
             if isinstance(obj, SfsLabErasmusAdditionalAttributes) or \
@@ -31,11 +28,3 @@ class IsAuth1OrReadOnly(permissions.BasePermission):
             return True
         return request.user.is_auth1
 
-
-class IsAuth2OrReadOnly(permissions.BasePermission):
-    message = "Devi essere un tutor per aggiungere o modificare le opportunità"
-
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        return request.user.is_auth2

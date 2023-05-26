@@ -1,12 +1,13 @@
 import locale
 from rest_framework import serializers
-from experiences.models import Tag, Rating, Experience,  \
+from experiences.models import Tag, Rating, Experience, \
     SfsLabErasmusAdditionalAttributes, CongressConferenceSummerSchoolAdditionalAttributes, \
-    UnipiInternship, University, InternshipAdditionalAttributes, Opportunity, City
+    UnipiInternship, University, InternshipAdditionalAttributes, City
 from django.utils import timezone
 from django.db import IntegrityError
-from core.utils import OPP_GROUP_TAGS, EXP_GROUP_TAGS, EXPERIENCE_TYPES
-
+from core.utils import OPP_GROUP_TAGS, EXP_GROUP_TAGS
+from .utils import InMemoryUploadedImageField
+from django.utils.translation import gettext_lazy as _
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 
@@ -29,79 +30,53 @@ def create_new_tags(data, created_by):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    created_by = serializers.StringRelatedField(read_only=True)
-    using_count = serializers.SerializerMethodField(read_only=True)
-    using_opp_count = serializers.SerializerMethodField(read_only=True)
+    # using_opp_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Tag
         fields = '__all__'
         extra_kwargs = {
-            'name': {'validators': []},
+            'created_by': {'read_only': True},
+            'name': {'validators': []}
         }
 
-    def get_using_count(self, instance):
-        return int(instance.get_exp_count())
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['using_count'] = instance.get_exp_count()
 
-    def get_using_opp_count(self, instance):
-        return int(instance.get_opp_count())
+        return representation
 
-    def create(self, validated_data):
-        try:
-            tag = Tag.objects.create(**validated_data)
-        except IntegrityError:
-            raise serializers.ValidationError('Il Tag esiste già')
-        return tag
+    def validate_name(self, value):
+        check_query = Tag.objects.filter(name=value)
+        if check_query.exists() and not (
+                isinstance(self.parent.parent, ExperienceSerializer)
+                and self.parent.field_name == "tags"
+        ):
+            raise serializers.ValidationError(
+                "Tag with this name already exists."
+            )
+
+        if not check_query.exists() and self.parent and isinstance(self.parent.parent, ExperienceSerializer):
+            raise serializers.ValidationError(
+                "Tag with this name was not found."
+            )
+        return value
+
+    # def get_using_opp_count(self, instance):
+    #    return int(instance.get_opp_count())
 
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = "__all__"
-
-
-class RatingSerializer(serializers.ModelSerializer):
-    average = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = Rating
-        fields = '__all__'
-
-    def val_ratings(self, value):
-        if 0 <= value <= 10:
-            return value
-        raise serializers.ValidationError("La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
-
-    def validate_global_r(self, value):
-        try:
-            return self.val_ratings(value=value)
-        except serializers.ValidationError:
-            raise serializers.ValidationError(
-                "La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
-
-    def validate_stay_r(self, value):
-        try:
-            return self.val_ratings(value=value)
-        except serializers.ValidationError:
-            raise serializers.ValidationError(
-                "La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
-
-    def validate_aquired_knowledge_r(self, value):
-        try:
-            return self.val_ratings(value=value)
-        except serializers.ValidationError:
-            raise serializers.ValidationError(
-                "La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
-
-    def validate_involvement_r(self, value):
-        try:
-            return self.val_ratings(value=value)
-        except serializers.ValidationError:
-            raise serializers.ValidationError(
-                "La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
-
-    def get_average(self, instance):
-        return instance.get_average()
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=model.objects.all(),
+                fields=('region', 'country', 'city'),
+                message=_("This city just exists!")
+            )
+        ]
 
 
 class UniversitySerializer(serializers.ModelSerializer):
@@ -110,53 +85,74 @@ class UniversitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['average'] = instance.get_average()
+
+        return representation
+
+    @staticmethod
+    def val_ratings(value):
+        if 0 <= value <= 10:
+            return value
+        raise serializers.ValidationError("La valutazione deve essere un numero fra 1 e 10, 0 se non si vuole omettere")
+
+    def validate_global_r(self, value):
+        return self.val_ratings(value=value)
+
+    def validate_stay_r(self, value):
+        return self.val_ratings(value=value)
+
+    def validate_acquired_knowledge_r(self, value):
+        return self.val_ratings(value=value)
+
+    def validate_involvement_r(self, value):
+        return self.val_ratings(value=value)
+
+
 class ExperienceSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(read_only=True)
-    author_year = serializers.SerializerMethodField(read_only=True)
-    author_email = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SlugField(read_only=True)
-    created_at = serializers.DateField(read_only=True)
-    updated_at = serializers.DateField(read_only=True)
-    started_at = serializers.DateField(label='Iniziata il')
-    ended_at = serializers.DateField(label='Terminata il', required=False, allow_null=True)
-    type = serializers.CharField(label='Tipo di esperienza', max_length=50)
+    img = InMemoryUploadedImageField(required=False, allow_null=True, allow_empty_file=True)
     rating = RatingSerializer(label='Valutazione')
     tags = TagSerializer(many=True)
-    img = serializers.ImageField(required=False, allow_null=True, allow_empty_file=True)
     city = CitySerializer(read_only=True)
-    city_id = serializers.IntegerField(write_only=True, label='ID della città')
     universities = UniversitySerializer(read_only=True, many=True)
+
+    city_id = serializers.IntegerField(write_only=True, label='ID della città')
     univ_ids = serializers.CharField(write_only=True, label="IDs delle università",
                                      required=False, allow_null=True, allow_blank=True)
-    status = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Experience
         fields = '__all__'
+        extra_kwargs = {
+            'author': {'read_only': True},
+            'slug': {'read_only': True},
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
+            'started_at': {'label': "Iniziata il"},
+            'ended_at': {'label': 'Terminata il', 'required': False, 'allow_null': True}
+        }
 
-    def get_author_year(self, instance):
-        return instance.author.actual_year
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["author"] = instance.author.__str__()
+        representation['author_year'] = instance.author.actual_year
+        representation['started_at'] = instance.started_at.strftime("%d-%m-%Y")
+        representation['ended_at'] = instance.ended_at.strftime("%d-%m-%Y")
+        representation['author_email'] = instance.author.user.email
+        representation['status'] = instance.status
+        representation['type'] = \
+            [x[1] for x in Experience.type.field.choices if x[0] == instance.type][0]
 
-    def get_author_email(self, instance):
-        return instance.author.user.email
+        return representation
 
-    def get_created_at(self, instance):
-        return instance.created_at.strftime('%d %B %Y')
-
-    def get_updated_at(self, instance):
-        return instance.updated_at.strftime('%d %B %Y')
-
-    def get_status(self, instance):
-        return instance.status
-
-    def validate_ended_at(self, value):
-        if value:
-            if value > timezone.datetime.now().date():
-                raise serializers.ValidationError("La data di fine dell'esperienza può "
-                                                  "al massimo coincidere con quella di oggi")
-        return value
-
-    def validate_started_at(self, value):
+    @staticmethod
+    def validate_started_at(value):
         if value:
             if value > timezone.datetime.now().date():
                 raise serializers.ValidationError("La data di fine dell'esperienza può "
@@ -165,14 +161,9 @@ class ExperienceSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Campo obbligatorio")
         return value
 
-    def validate_type(self, value):
-        if value not in [x[0] for x in EXPERIENCE_TYPES]:
-            raise serializers.ValidationError("Il tipo dell'esperienza non è stato riconosciuto")
-        return value
-
     def validate(self, attrs):
-        if self.validate_ended_at(value=attrs['ended_at']):
-            if self.validate_started_at(value=attrs['started_at']) > self.validate_ended_at(value=attrs['ended_at']):
+        if attrs['ended_at']:
+            if self.validate_started_at(value=attrs['started_at']) > attrs['ended_at']:
                 raise serializers.ValidationError('La data di inizio non può essere più recente di quella di fine')
         return attrs
 
@@ -182,14 +173,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
         created_by = validated_data.pop('created_by')
         univ_ids = validated_data.pop('univ_ids')
         city_id = validated_data.pop('city_id')
-        univs = []
-        for univ_id in univ_ids.split(','):
-            if univ_id != '':
-                try:
-                    univs.append(University.objects.get(pk=univ_id))
-                except University.DoesNotExist:
-                    raise serializers.ValidationError("L'università selezionata non esiste")
         exp = Experience.objects.create(**validated_data)
+
         Rating.objects.create(experience=exp, **rating_data)
         if city_id is not None:
             try:
@@ -204,6 +189,13 @@ class ExperienceSerializer(serializers.ModelSerializer):
                 exp.tags.add(t)
         except serializers.ValidationError:
             raise serializers.ValidationError("Gruppo non valido del tag")
+        univs = []
+        for univ_id in univ_ids.split(','):
+            if univ_id != '':
+                try:
+                    univs.append(University.objects.get(pk=univ_id))
+                except University.DoesNotExist:
+                    raise serializers.ValidationError("L'università selezionata non esiste")
         for u in list(set(univs)):
             exp.universities.add(u)
         return exp
@@ -251,166 +243,64 @@ class ExperienceSerializer(serializers.ModelSerializer):
         return instance
 
 
-class UpdateExperienceImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Experience
-        fields = ['img', ]
-
-
-class SfsLabErasmusAdditionalAttributesSerializer(serializers.ModelSerializer):
+class BaseAttributesSerializer(serializers.ModelSerializer):
     experience = serializers.StringRelatedField(read_only=True)
-    component = serializers.SerializerMethodField(read_only=True)
 
+    class Meta:
+        abstract = True
+        model = None
+
+    def create(self, validated_data):
+        try:
+            exp = Experience.objects.get(slug=validated_data.pop('slug'))
+        except Experience.DoesNotExist():
+            raise serializers.ValidationError("Non è stato possibile trovare l'esperienza")
+        attr = self.Meta.model.objects.create(experience=exp, **validated_data)
+        return attr
+
+
+class SfsLabErasmusAdditionalAttributesSerializer(BaseAttributesSerializer):
     class Meta:
         model = SfsLabErasmusAdditionalAttributes
         fields = '__all__'
 
-    def get_component(self, instance):
-        return 'sfs-lab-erasmus'
 
-    def create(self, validated_data):
-        try:
-            exp = Experience.objects.get(slug=validated_data.pop('slug'))
-        except Experience.DoesNotExist():
-            raise serializers.ValidationError("Non è stato possibile trovare l'esperienza")
-        attr = SfsLabErasmusAdditionalAttributes.objects.create(experience=exp, **validated_data)
-        return attr
-
-
-class CongressConferenceSummerSchoolAdditionalAttributesSerializer(serializers.ModelSerializer):
-    experience = serializers.StringRelatedField(read_only=True)
-    component = serializers.SerializerMethodField(read_only=True)
-
+class CongressConferenceSummerSchoolAdditionalAttributesSerializer(BaseAttributesSerializer):
     class Meta:
         model = CongressConferenceSummerSchoolAdditionalAttributes
         fields = '__all__'
 
-    def get_component(self, instance):
-        return 'congress-conference-summer-school'
 
-    def create(self, validated_data):
-        try:
-            exp = Experience.objects.get(slug=validated_data.pop('slug'))
-        except Experience.DoesNotExist():
-            raise serializers.ValidationError("Non è stato possibile trovare l'esperienza")
-        attr = CongressConferenceSummerSchoolAdditionalAttributes.objects.create(experience=exp, **validated_data)
-        return attr
-
-
-class InternshipAdditionalAttributesSerializer(serializers.ModelSerializer):
-    experience = serializers.StringRelatedField(read_only=True)
-    component = serializers.SerializerMethodField(read_only=True)
-
+class InternshipAdditionalAttributesSerializer(BaseAttributesSerializer):
     class Meta:
         model = InternshipAdditionalAttributes
         fields = '__all__'
 
-    def get_component(self, instance):
-        return 'internship'
-
-    def create(self, validated_data):
-        try:
-            exp = Experience.objects.get(slug=validated_data.pop('slug'))
-        except Experience.DoesNotExist():
-            raise serializers.ValidationError("Non è stato possibile trovare l'esperienza")
-        attr = InternshipAdditionalAttributes.objects.create(experience=exp, **validated_data)
-        return attr
-
 
 class UnipiInternshipSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(read_only=True)
-    author_year = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SlugField(read_only=True)
-    created_at = serializers.DateField(read_only=True)
-    updated_at = serializers.DateField(read_only=True)
-
     class Meta:
         model = UnipiInternship
         fields = '__all__'
+        extra_kwargs = {
+            'author': {'read_only': True},
+            'slug': {'read_only': True},
+            'created_at': {'read_only': True},
+            'updated_at': {'read_only': True},
+        }
 
-    def get_author_year(self, instance):
-        return instance.author.actual_year
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["author"] = instance.author.__str__()
+        representation['author_year'] = instance.author.actual_year
+        representation['ward'] = [x[1] for x in UnipiInternship.ward.field.choices if x[0] == instance.ward][0]
+        representation['academic_year'] = \
+            [x[1] for x in UnipiInternship.academic_year.field.choices if x[0] == instance.academic_year][0]
+        representation['recommended_year'] = \
+            [x[1] for x in UnipiInternship.recommended_year.field.choices if x[0] == instance.recommended_year][0]
+        representation['attendance'] = \
+            [x[1] for x in UnipiInternship.attendance.field.choices if x[0] == instance.attendance][0]
+        representation['place'] = \
+            [x[1] for x in UnipiInternship.place.field.choices if x[0] == instance.place][0]
 
-    def get_created_at(self, instance):
-        return instance.created_at.strftime('%d %B %Y')
+        return representation
 
-    def get_updated_at(self, instance):
-        return instance.updated_at.strftime('%d %B %Y')
-
-
-class OpportunitySerializer(serializers.ModelSerializer):
-    university = UniversitySerializer(read_only=True)
-    univ_id = serializers.IntegerField(write_only=True, label="ID dell' università")
-    author = serializers.StringRelatedField(read_only=True)
-    author_email = serializers.SerializerMethodField(read_only=True)
-    author_full_name = serializers.SerializerMethodField(read_only=True)
-    slug = serializers.SlugField(read_only=True)
-    created_at = serializers.DateField(read_only=True)
-    updated_at = serializers.DateField(read_only=True)
-    tags = TagSerializer(many=True)
-
-    class Meta:
-        model = Opportunity
-        fields = "__all__"
-
-    def get_author_email(self, instance):
-        return instance.author.email
-
-    def get_author_full_name(self, instance):
-        return instance.author.get_full_name()
-
-    def get_created_at(self, instance):
-        return instance.created_at.strftime('%d %B %Y')
-
-    def get_updated_at(self, instance):
-        return instance.updated_at.strftime('%d %B %Y')
-
-    def create(self, validated_data):
-        univ_id = validated_data.pop('univ_id')
-        tags_data = validated_data.pop('tags')
-        created_by = validated_data.pop('created_by')
-        try:
-            univ = University.objects.get(pk=univ_id)
-        except University.DoesNotExists():
-            raise serializers.ValidationError("L'università selezionata non esiste")
-
-        opportunity = Opportunity.objects.create(university=univ, **validated_data)
-
-        try:
-            for t in list(set(create_new_tags(tags_data, created_by=created_by))):
-                opportunity.tags.add(t)
-        except serializers.ValidationError:
-            raise serializers.ValidationError("Gruppo non valido del tag")
-
-        return opportunity
-
-    def update(self, instance, validated_data):
-        univ_id = validated_data.pop('univ_id')
-        tags_data = validated_data.pop('tags')
-        created_by = validated_data.pop('created_by')
-        instance.tags.clear()
-        try:
-            for t in list(set(create_new_tags(tags_data, created_by=created_by))):
-                instance.tags.add(t)
-        except serializers.ValidationError:
-            raise serializers.ValidationError("Gruppo non valido del tag")
-
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        try:
-            univ = University.objects.get(pk=univ_id)
-        except University.DoesNotExists():
-            raise serializers.ValidationError("L'università selezionata non esiste")
-
-        if instance.university != univ:
-            instance.university = univ
-        instance.save()
-
-        return instance
-
-
-class OpportunityStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Opportunity
-        fields = ['active']

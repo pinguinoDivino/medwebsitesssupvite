@@ -1,17 +1,19 @@
 import os
-
 from dateutil import relativedelta
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import UniqueConstraint
+from django.db.models.functions import Lower
+
 from accounts.models import StudentAccount
-from core.utils import EXP_GROUP_TAGS, OPP_GROUP_TAGS, generate_random_string
+from core.utils import EXP_GROUP_TAGS, OPP_GROUP_TAGS, generate_random_string, EXPERIENCE_TYPES, COUNTRIES, WARDS, \
+    UNIPI_INTERNSHIP_PLACES, UNIPI_INTERNSHIP_YEAR, ATTENDANCE_CHOICES
 from django.db import IntegrityError
 from django.utils.translation import gettext_lazy as _
 import locale
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
-
 
 locale.setlocale(locale.LC_ALL, 'en_US.utf8')
 User = get_user_model()
@@ -51,11 +53,14 @@ class InternshipProfessorManager(models.Manager):
         return obj
 
 
+# TODO ADD ID and remove name from primary key and use unique together for name and group
+
+
 class Tag(models.Model):
     name = NameField(_('nome'), primary_key=True, max_length=300)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tags',
                                    verbose_name='creato da')
-    group = models.CharField(_('gruppo'), max_length=50)
+    group = models.CharField(_('gruppo'), max_length=50, choices=EXP_GROUP_TAGS)
     objects = TagManager()
 
     class Meta:
@@ -75,7 +80,7 @@ class Tag(models.Model):
 
 class University(models.Model):
     name = models.CharField(_("nome dell'università"), max_length=200)
-    country = models.CharField(_("stato"), max_length=20)
+    country = models.CharField(_("stato"), max_length=45, choices=((x, x) for x in COUNTRIES))
     link = models.CharField(_("link"), max_length=300)
     objects = models.Manager()
 
@@ -83,15 +88,20 @@ class University(models.Model):
         db_table = 'universities'
         verbose_name = 'università'
         verbose_name_plural = 'università'
+        constraints = [
+            UniqueConstraint(
+                Lower('country'),
+                Lower('name').desc(),
+                name='country_name_unique'),
+        ]
 
     def __str__(self):
         return self.name
 
 
 class City(models.Model):
-    country = models.CharField(_('stato'), max_length=300, help_text=_('stato'))
-    region = models.CharField(_('regione'), max_length=300, help_text=_('regione'),
-                              null=True, blank=True)
+    country = models.CharField(_('stato'), max_length=300, help_text=_('stato'), choices=((x, x) for x in COUNTRIES))
+    region = models.CharField(_('regione'), max_length=300, help_text=_('regione'))
     city = models.CharField(_('comune'), max_length=300, help_text=_('comune'))
 
     objects = models.Manager()
@@ -103,6 +113,13 @@ class City(models.Model):
         db_table = 'cities'
         verbose_name = 'città'
         verbose_name_plural = 'città'
+        constraints = [
+            UniqueConstraint(
+                Lower('city'),
+                Lower('region'),
+                Lower('country'),
+                name='city_region_country_unique'),
+        ]
 
 
 class BaseExp(models.Model):
@@ -110,7 +127,7 @@ class BaseExp(models.Model):
     updated_at = models.DateField(_('aggiornata il'), auto_now=True)
     author_contact = models.CharField(_('contatto autore'),
                                       max_length=150, blank=True, default='email istituzionale')
-    review = models.TextField(_('recensione'), blank=True, null=True, help_text=_("Descrizione e recensione"))
+    review = models.TextField(_('recensione'), help_text=_("Descrizione e recensione"))
     slug = models.SlugField(max_length=255, unique=True)
 
     class Meta:
@@ -125,7 +142,7 @@ class Experience(BaseExp):
     img = models.ImageField(_('immagine'), upload_to="imgs/%Y/%m/%d", blank=True, null=True)
     ref = models.CharField(_('referente'), max_length=150,
                            help_text=_("referente a cui rivolgersi per effetturare l'esperienza "))
-    type = models.CharField(_('tipo esperienza'), max_length=14, blank=True)
+    type = models.CharField(_('tipo esperienza'), max_length=14, blank=True, choices=EXPERIENCE_TYPES)
     group = models.CharField(_('gruppo'), max_length=6, default=generate_random_string(), blank=True, null=False)
 
     author = models.ForeignKey(StudentAccount, on_delete=models.CASCADE, related_name='experiences',
@@ -180,7 +197,7 @@ class Experience(BaseExp):
 class Rating(models.Model):
     global_r = models.PositiveSmallIntegerField(_('v. globale'))
     stay_r = models.PositiveSmallIntegerField(_('v. istituzione'))
-    aquired_knowledge_r = models.PositiveSmallIntegerField(_('v. conoscenza acquisita'))
+    acquired_knowledge_r = models.PositiveSmallIntegerField(_('v. conoscenza acquisita'))
     involvement_r = models.PositiveSmallIntegerField(_('v. coinvolgimento'))
     updated_at = models.DateField(_('aggiornata il'), auto_now=True)
     experience = models.OneToOneField(Experience, on_delete=models.CASCADE, related_name='rating',
@@ -196,12 +213,12 @@ class Rating(models.Model):
         return "Valutazione complessiva: {}".format(self.global_r)
 
     def get_average(self):
-        return round((self.global_r + self.stay_r + self.aquired_knowledge_r + self.involvement_r) / 4, 0)
+        return round((self.global_r + self.stay_r + self.acquired_knowledge_r + self.involvement_r) / 4, 0)
 
 
 class SfsLabErasmusAdditionalAttributes(models.Model):
     thesis = models.BooleanField(_('si può scrivere la tesi?'), default=None, null=True, blank=True)
-    istitution = models.CharField(_('istituzione'), max_length=300, null=True, blank=True)
+    institution = models.CharField(_('istituzione'), max_length=300, null=True, blank=True)
     experience = models.OneToOneField(Experience, on_delete=models.CASCADE, related_name='sfs_lab_erasmus_attrs',
                                       verbose_name='esperienza')
     objects = models.Manager()
@@ -255,7 +272,7 @@ class InternshipAdditionalAttributes(models.Model):
                                       related_name='internship_attrs',
                                       verbose_name='esperienza')
     ward = models.CharField(_('reparto'), max_length=50, null=True, blank=True)
-    istitution = models.CharField(_('istituzione'), max_length=300, null=True, blank=True)
+    institution = models.CharField(_('istituzione'), max_length=300, null=True, blank=True)
     objects = models.Manager()
 
     class Meta:
@@ -273,15 +290,15 @@ class InternshipAdditionalAttributes(models.Model):
 
 
 class UnipiInternship(BaseExp):
-    academic_year = models.PositiveSmallIntegerField(_('anno accademico'))
-    recommended_year = models.PositiveSmallIntegerField(_('anno accademico consigliato'))
-    ward = models.CharField(_('reparto'), max_length=2)
+    academic_year = models.PositiveSmallIntegerField(_('anno accademico'), choices=UNIPI_INTERNSHIP_YEAR)
+    recommended_year = models.PositiveSmallIntegerField(_('anno accademico consigliato'), choices=UNIPI_INTERNSHIP_YEAR)
+    ward = models.CharField(_('reparto'), max_length=2, choices=WARDS)
     author = models.ForeignKey(StudentAccount, on_delete=models.CASCADE,
                                related_name='unipi_internship', verbose_name='autore')
     rating = models.PositiveSmallIntegerField(_('valutazione'))
     active = models.BooleanField(_('attivo'), default=True)
-    place = models.CharField(_('luogo'), max_length=3)
-    attendance = models.PositiveSmallIntegerField(_('presenze'))
+    place = models.CharField(_('luogo'), max_length=3, choices=UNIPI_INTERNSHIP_PLACES)
+    attendance = models.PositiveSmallIntegerField(_('presenze'), choices=ATTENDANCE_CHOICES)
     objects = models.Manager()
 
     class Meta:
@@ -291,32 +308,3 @@ class UnipiInternship(BaseExp):
 
     def __str__(self):
         return "Tirocinio di %s presso il reparto di %s" % (self.author.__str__(), self.ward)
-
-
-class Opportunity(models.Model):
-    created_at = models.DateField(_('aggiunta il'), auto_now_add=True)
-    updated_at = models.DateField(_('aggiornata il'), auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name="opportunities", verbose_name="autore")
-    description = models.TextField(_("descrizione"))
-    university = models.ForeignKey(University, on_delete=models.CASCADE, related_name="opportunities",
-                                   verbose_name="università")
-    istitution = models.CharField(_("istituto"), max_length=300)
-
-    ref = models.CharField(_('referente'), max_length=150)
-
-    active = models.BooleanField(_('attivo'), default=True)
-
-    slug = models.SlugField(max_length=255, unique=True)
-
-    tags = models.ManyToManyField(Tag,  related_name='opportunities', verbose_name='tag', blank=True)
-
-    objects = OpportunityManager()
-
-    class Meta:
-        db_table = 'opportunities'
-        verbose_name = "opportunità"
-        verbose_name_plural = "opportunità"
-
-    def __str__(self):
-        return "Opportunità presso l'istituto %s di %s" % (self.istitution, self.university)

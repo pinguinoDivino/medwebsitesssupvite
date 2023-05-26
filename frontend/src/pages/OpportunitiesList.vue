@@ -28,7 +28,7 @@
               <option value="author__last_name">Cognome autore</option>
               <option value="description">Descrizione</option>
               <option value="university__name">Università</option>
-              <option value="istitution">Istituzione</option>
+              <option value="institution">Istituzione</option>
               <option value="tags__name">Parole chiave</option>
               <option class="not-found" value="">Disattiva</option>
             </select>

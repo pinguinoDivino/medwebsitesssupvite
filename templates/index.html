@@ -4,8 +4,10 @@
 {% block head %}
 {% endblock%}
 {% block content %}
-    <div id="app"></div>
-    {% render_vite_bundle %}
+  <div id="backdrop-root"></div>
+  <div id="overlay-root"></div>
+  <div id="root"></div>
+  {% render_vite_bundle %}
 {% endblock %}
 {% block js %}
 {% endblock %}

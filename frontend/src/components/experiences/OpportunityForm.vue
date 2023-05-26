@@ -43,9 +43,9 @@
           <h2>Dettagli</h2>
           <div class="form-row row">
             <div class="col-lg-6" :class="{ invalid: !description.isValid }">
-              <label for="rev">Descrivi</label>
+              <label for="revF">Descrivi</label>
               <textarea
-                  id="rev"
+                  id="revF"
                   class="form-control"
                   rows="10"
                   v-model.trim="description.val"
@@ -171,8 +171,8 @@ export default {
       isValid: true,
       errorText: ""
     });
-    const istitution = reactive({
-      val: props.pAct !== null ? props.pAct.istitution : "",
+    const institution = reactive({
+      val: props.pAct !== null ? props.pAct.institution : "",
       isValid: true,
       errorText: ""
     });
@@ -257,7 +257,7 @@ export default {
       }
       context.emit("submit-form", {
         univ_id: univ_id.val,
-        istitution: istitution.val,
+        institution: institution.val,
         ref: refName.val,
         tags: selectedTags.value,
         description: description.val
@@ -296,7 +296,7 @@ export default {
       getLeftTextChars,
       formIsValid,
       description,
-      istitution,
+      institution,
       refName,
       univ_id,
       updateUniv,

@@ -2,12 +2,12 @@
   <div>
     <h2>Attributi di {{ type }}</h2>
     <div class="form-row row">
-      <div class="form-group col-md-6" :class="{ invalid: !istitution.isValid }">
+      <div class="form-group col-md-6" :class="{ invalid: !institution.isValid }">
         <label>Istituto</label>
-        <input type="text" v-model.trim="istitution.val"
-               class="form-control" @click="clearValidity('istitution')"
+        <input type="text" v-model.trim="institution.val"
+               class="form-control" @click="clearValidity('institution')"
         />
-        <div class="invalid-message" v-if="!istitution.isValid">
+        <div class="invalid-message" v-if="!institution.isValid">
           {{ istitution.errorText }}
         </div>
       </div>
@@ -47,8 +47,8 @@ export default {
       isValid: true,
       errorText: ""
     });
-    const istitution = reactive({
-      val: props.attrs !== null ? props.attrs.istitution : '',
+    const institution = reactive({
+      val: props.attrs !== null ? props.attrs.institution : '',
       isValid: true,
       errorText: ""
     });
@@ -92,7 +92,7 @@ export default {
       }
       const data = {
         ward: ward.val,
-        istitution: istitution.val,
+        institution: institution.val,
         attr: 'attrs3'
       };
       context.emit("update-attr", {data, attrIsValid: attrIsValid.value});
@@ -103,7 +103,7 @@ export default {
       eval(input).errorText = "";
     }
 
-    return {ward, istitution, clearValidity, submitData}
+    return {ward, institution, clearValidity, submitData}
   }
 };
 </script>

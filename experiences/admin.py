@@ -2,10 +2,10 @@ from django.contrib import admin
 from .models import Rating, Tag, Experience, \
     CongressConferenceSummerSchoolAdditionalAttributes, SfsLabErasmusAdditionalAttributes, \
     InternshipAdditionalAttributes, \
-    UnipiInternship, University, Opportunity, City
+    UnipiInternship, University, City
 from django.utils.html import format_html
 from .forms import TagAdminForm, RatingAdminForm, ExperienceChangeAdminForm, ExperienceCreationAdminForm, \
-    OpportunityAdminForm, UnipiInternshipAdminForm
+    UnipiInternshipAdminForm
 from core.utils import EXPERIENCE_TYPES, switcher, EXP_GROUP_TAGS, OPP_GROUP_TAGS, UNIPI_INTERNSHIP_YEAR, \
     UNIPI_INTERNSHIP_PLACES, WARDS
 
@@ -14,7 +14,7 @@ class TagAdmin(admin.ModelAdmin):
     form = TagAdminForm
 
     def group_full(self, obj):
-        return [x[1] for x in EXP_GROUP_TAGS+OPP_GROUP_TAGS if x[0] == obj.group][0]
+        return [x[1] for x in EXP_GROUP_TAGS + OPP_GROUP_TAGS if x[0] == obj.group][0]
 
     group_full.short_description = "Gruppo"
 
@@ -44,6 +44,13 @@ class UniversityAdmin(admin.ModelAdmin):
     ordering = ('country', 'name')
 
 
+class CityAdmin(admin.ModelAdmin):
+    list_display = ['city', 'region', 'country']
+    list_filter = ('country',)
+    search_fields = ('city', 'region', 'country')
+    ordering = ('country', 'city')
+
+
 class RatingAdmin(admin.ModelAdmin):
     form = RatingAdminForm
 
@@ -56,16 +63,16 @@ class RatingAdmin(admin.ModelAdmin):
 
     experience_link.short_description = 'Esperienza'
 
-    list_display = ("global_r", "stay_r", "aquired_knowledge_r", "involvement_r", "updated_at", "experience_link")
+    list_display = ("global_r", "stay_r", "acquired_knowledge_r", "involvement_r", "updated_at", "experience_link")
 
     readonly_fields = ("experience_link", "updated_at")
 
-    ordering = ("global_r", "stay_r", "aquired_knowledge_r", "involvement_r", "updated_at")
+    ordering = ("global_r", "stay_r", "acquired_knowledge_r", "involvement_r", "updated_at")
 
     fieldsets = (
         ("Informazioni", {
             'classes': ('wide',),
-            'fields': ("global_r", 'stay_r', 'aquired_knowledge_r', 'involvement_r', 'updated_at'),
+            'fields': ("global_r", 'stay_r', 'acquired_knowledge_r', 'involvement_r', 'updated_at'),
         }),
         ("Collegamenti", {
             'classes': ('wide',),
@@ -79,7 +86,7 @@ class RatingAdmin(admin.ModelAdmin):
 
 class RatingInline(admin.StackedInline):
     model = Rating
-    fields = ('global_r', 'stay_r', 'aquired_knowledge_r', 'involvement_r')
+    fields = ('global_r', 'stay_r', 'acquired_knowledge_r', 'involvement_r')
     extra = 1
     max_num = 1
     min_num = 1
@@ -87,7 +94,7 @@ class RatingInline(admin.StackedInline):
 
 class SfsLabErasmusAdditionalAttributesInline(admin.StackedInline):
     model = SfsLabErasmusAdditionalAttributes
-    fields = ('thesis', 'istitution')
+    fields = ('thesis', 'institution')
     extra = 1
     max_num = 1
     min_num = 1
@@ -103,7 +110,7 @@ class CongressConferenceSummerSchoolAdditionalAttributesInline(admin.StackedInli
 
 class InternshipAdditionalAttributesInline(admin.StackedInline):
     model = InternshipAdditionalAttributes
-    fields = ('ward', 'istitution')
+    fields = ('ward', 'institution')
     extra = 0
     max_num = 1
     min_num = 1
@@ -165,7 +172,7 @@ class ExperienceAdmin(admin.ModelAdmin):
         }),
         ("Contatti", {
             'classes': ('collapse',),
-            'fields': ('ref',  'author_contact'),
+            'fields': ('ref', 'author_contact'),
         }),
         ("Informazioni aggiuntive", {
             'classes': ('collapse',),
@@ -222,7 +229,6 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 
 class UnipiInternshipAdmin(admin.ModelAdmin):
-
     form = UnipiInternshipAdminForm
 
     def academic_year_full(self, obj):
@@ -234,6 +240,7 @@ class UnipiInternshipAdmin(admin.ModelAdmin):
 
     def ward_full(self, obj):
         if obj.ward:
+            print(obj.ward)
             return [x[1] for x in WARDS if x[0] == obj.ward][0]
         return None
 
@@ -261,40 +268,13 @@ class UnipiInternshipAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Dettagli", {
             'classes': ('wide',),
-            'fields': ("ward", 'recommended_year', 'place', 'attendance',  'active'),
+            'fields': ("ward", 'recommended_year', 'place', 'attendance', 'active'),
         }),
         ("Esperienza", {
             'classes': ('wide',),
-            'fields': ('academic_year', 'author', 'author_contact', 'rating', 'review', ),
+            'fields': ('academic_year', 'author', 'author_contact', 'rating', 'review',),
         }),
     )
-
-
-class OpportunityAdmin(admin.ModelAdmin):
-    form = OpportunityAdminForm
-
-    list_display = ['university', 'istitution', 'author', 'ref', 'created_at', 'active']
-
-    list_filter = ['active', 'author']
-
-    ordering = ['created_at']
-
-    filter_horizontal = ('tags', )
-
-    search_fields = ['university__name', 'istitution', 'description', 'tags__name']
-
-    list_per_page = 30
-
-    readonly_fields = ['slug', ]
-
-    fieldsets = (
-        ("Informazioni", {
-            'classes': ('wide',),
-            'fields': ("author", 'description', 'university', 'istitution', 'ref', 'active',  'tags'),
-        }),
-    )
-
-    save_as = True
 
 
 admin.site.register(Experience, ExperienceAdmin)
@@ -303,7 +283,6 @@ admin.site.register(CongressConferenceSummerSchoolAdditionalAttributes)
 admin.site.register(InternshipAdditionalAttributes)
 admin.site.register(UnipiInternship, UnipiInternshipAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(City)
+admin.site.register(City, CityAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(University, UniversityAdmin)
-admin.site.register(Opportunity, OpportunityAdmin)

@@ -165,7 +165,7 @@ export default {
       submitError.value = null;
     }
 
-    document.title = props.slug ? props.asModel ? "Aggiungi attività" : "Mmodifica attività" : "Aggiungi attività" ;
+    document.title = props.slug ? props.asModel ? "Aggiungi attività" : "Modifica attività" : "Aggiungi attività" ;
     return {
       userIsAuth1,
       userIsAuth2,

@@ -37,5 +37,6 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + \
               static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns.append(
-    re_path(r"^.*$", IndexTemplateView.as_view(), name="entry-point")
+    re_path(r"^(?!.*(api/))", IndexTemplateView.as_view(), name="entry-point")
 )
+# match all the routes but not the one that has api/

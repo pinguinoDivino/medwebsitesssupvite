@@ -15,6 +15,7 @@ import {useStore} from "vuex";
 import {computed, watch} from "vue";
 import {useRoute} from "vue-router";
 import TheFooter from "./components/layout/TheFooter.vue";
+
 export default {
   components: {
     TheFooter,
@@ -23,21 +24,22 @@ export default {
   setup() {
     const store = useStore();
     const route = useRoute();
+
     async function loadUserInformation() {
       await store.dispatch("loadUserInformation");
     }
 
-    const hasUserInformation = computed(function() {
+    const hasUserInformation = computed(function () {
       return !!store.getters.userFullName;
     });
     loadUserInformation();
     watch(
-      () => route,
-      () => {
-        window.scrollTo(0, 0);
-      }
+        () => route,
+        () => {
+          window.scrollTo(0, 0);
+        }
     );
-    return { hasUserInformation };
+    return {hasUserInformation};
   }
 };
 </script>
@@ -47,9 +49,11 @@ body {
   background-color: var(--backgroundColor);
   color: var(--fontColor);
 }
+
 .container-fluid {
   margin: 0;
 }
+
 .theme-switch-wrapper {
   display: flex;
   background-color: inherit;
@@ -57,17 +61,23 @@ body {
   flex-direction: row;
   justify-content: center;
 
-em {
-  margin-left: 1rem;
-  font-size: inherit;
-}
+  em {
+    margin-left: 1rem;
+    font-size: inherit;
+  }
 
 }
-em:before{
-    content:" ";
-    display:inline-block;
-    width: 0.5rem;
+
+em:before {
+  content: " ";
+  display: inline-block;
+  width: 0.5rem;
 }
+
+[data-theme="light"] em {
+  color: black;
+}
+
 .theme-switch {
   display: inline-block;
   height: 34px;
@@ -120,27 +130,34 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
 .vue-select {
   width: 100% !important;
 }
+
 .vue-select-header {
   background-color: var(--inputColor) !important;
   border: 1px solid var(--inputColor) !important;
 }
+
 .vue-select.disabled {
   background-color: var(--inputColor) !important;
 }
+
 .vue-input input {
   background-color: var(--inputColor) !important;
   color: var(--fontColor) !important;
 }
+
 .vue-input input[disabled] {
   background-color: var(--inputColor) !important;
 }
+
 .vue-dropdown {
   max-height: 150px !important;
   background-color: var(--inputColor) !important;
 }
+
 .vue-dropdown-item.disabled {
   background-color: var(--inputColor) !important;
   cursor: not-allowed;
@@ -149,26 +166,31 @@ input:checked + .slider:before {
 .vue-dropdown-item.selected {
   background-color: var(--inputColor) !important;
 }
+
 .multiselect__tags-wrap {
   display: none !important;
   background-color: var(--inputColor) !important;
 }
+
 .multiselect__input {
   width: 90% !important;
   border: none !important;
   background-color: var(--inputColor) !important;
   color: var(--fontColor) !important;
 }
+
 .multiselect__tags {
   min-height: 30px !important;
   max-height: 25px !important;
   padding: 4px 40px 0 8px !important;
   background-color: var(--inputColor) !important;
 }
+
 .multiselect__content-wrapper {
   background-color: var(--inputColor) !important;
   color: var(--fontColor) !important;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 15px;
@@ -183,6 +205,7 @@ input:checked + .slider:before {
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
 }
+
 span.swiper-pagination-bullet {
   display: none !important;
 }

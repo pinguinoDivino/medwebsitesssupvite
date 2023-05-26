@@ -224,16 +224,16 @@
                 {{ vStay.errorText }}
               </div>
             </div>
-            <div class="form-group-sm col-sm-6 col-xl-3" :class="{ invalid: !vAquiredKnowledge.isValid }">
+            <div class="form-group-sm col-sm-6 col-xl-3" :class="{ invalid: !vAcquiredKnowledge.isValid }">
               <label>Conoscenza acquisita</label>
               <base-counter-input class="form-control"
                                   :mdCounter="true"
-                                  @click="clearValidity('vAquiredKnowledge')"
-                                  :oldVal="vAquiredKnowledge.val"
-                                  @update-value="vAquiredKnowledge.val = $event"
+                                  @click="clearValidity('vAcquiredKnowledge')"
+                                  :oldVal="vAcquiredKnowledge.val"
+                                  @update-value="vAcquiredKnowledge.val = $event"
               ></base-counter-input>
-              <div class="invalid-message" v-if="!vAquiredKnowledge.isValid">
-                {{ vAquiredKnowledge.errorText }}
+              <div class="invalid-message" v-if="!vAcquiredKnowledge.isValid">
+                {{ vAcquiredKnowledge.errorText }}
               </div>
             </div>
             <div class="form-group-sm col-sm-6 col-xl-3" :class="{ invalid: !vInvolvement.isValid }">
@@ -472,10 +472,10 @@ export default {
       isValid: true,
       errorText: ""
     });
-    const vAquiredKnowledge = reactive({
+    const vAcquiredKnowledge = reactive({
       val:
           props.pAct !== null && !props.asModel
-              ? props.pAct.rating.aquired_knowledge_r
+              ? props.pAct.rating.acquired_knowledge_r
               : 1,
       isValid: true,
       errorText: ""
@@ -697,10 +697,10 @@ export default {
         vStay.isValid = false;
         vStay.errorText = "Deve essere compreso fra 0 e 10";
       }
-      if ((vAquiredKnowledge.val !== null && (vAquiredKnowledge.val < 0) || vAquiredKnowledge.val > 10)) {
+      if ((vAcquiredKnowledge.val !== null && (vAcquiredKnowledge.val < 0) || vAcquiredKnowledge.val > 10)) {
         formIsValid.value = false;
-        vAquiredKnowledge.isValid = false;
-        vAquiredKnowledge.errorText = "Deve essere compreso fra 0 e 10";
+        vAcquiredKnowledge.isValid = false;
+        vAcquiredKnowledge.errorText = "Deve essere compreso fra 0 e 10";
       }
       if ((vInvolvement.val !== null && (vInvolvement.val < 0) || vInvolvement.val > 10)) {
         formIsValid.value = false;
@@ -747,7 +747,7 @@ export default {
         rating: {
           global_r: vGlobal.val,
           stay_r: vStay.val,
-          aquired_knowledge_r: vAquiredKnowledge.val,
+          acquired_knowledge_r: vAcquiredKnowledge.val,
           involvement_r: vInvolvement.val
         },
         univ_ids: univ_ids.value.toString(),
@@ -818,7 +818,7 @@ export default {
       refName,
       vGlobal,
       vStay,
-      vAquiredKnowledge,
+      vAcquiredKnowledge,
       vInvolvement,
       cityId,
       updateUnivs,

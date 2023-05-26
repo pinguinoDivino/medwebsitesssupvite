@@ -12,7 +12,7 @@
 
   <!-- tag canonico -->
 
-  <link rel="canonical" href="https://medexperiences.santannapisa.it/accounts/login" />
+  <link rel="canonical" href="https://medexperiences.santannapisa.it/accounts/login"/>
 
   <!-- Style -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.css' %}">
@@ -49,7 +49,8 @@
   <meta property="og:url" content="https://medexperiences.santannapisa.it"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="MedExperiences, Sant'Anna"/>
-  <meta property="og:description" content="Attività degli Allievi di medicina della Scuola Superiore Sant'Anna di Pisa."/>
+  <meta property="og:description"
+        content="Attività degli Allievi di medicina della Scuola Superiore Sant'Anna di Pisa."/>
   <meta property="og:image" content="https://medexperiences.santannapisa.it/static/img/auth/login2.jpeg"/>
 
 
@@ -69,17 +70,17 @@
 {% block content %} {% endblock %}
 {% block js %} {% endblock %}
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "WebSite",
-  "name": "MedExperiences",
-  "url": "https://medexperiences.santannapisa.it",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "{search_term_string}",
-    "query-input": "required name=search_term_string"
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebSite",
+    "name": "MedExperiences",
+    "url": "https://medexperiences.santannapisa.it",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
-}
 </script>
 </body>
 </html>

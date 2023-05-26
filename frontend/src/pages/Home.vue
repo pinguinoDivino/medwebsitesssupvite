@@ -13,7 +13,7 @@
                 <h2>SFS e Laboratori</h2>
                 <h3>Cosa sono?</h3>
                 <p>
-                  I soggiorni fuorisede e i laboratori sono parte intengrante della
+                  I soggiorni fuori sede e i laboratori sono parte integrante della
                   nostra esperienza formativa, infatti già da febbraio del primo anno
                   siamo incoraggiati a recarci in alcuni dipartimenti dell'università
                   di Pisa e del CNR. Ci permettono di affacciarci non solo al mondo
@@ -48,7 +48,7 @@
                 <h2>Conferenze e Congressi</h2>
                 <h3>Dove?</h3>
                 <p>
-                  Ogni giorno nell'Aula Magna è organizzata almeno una conferenza
+                  Ogni giorno nell' Aula Magna è organizzata almeno una conferenza
                   tenuta, oltre che dai nostri Professori, anche da ricercatori di altre
                   università.
                   Esistono programmi annuali, come 'The Human Brain Project'
@@ -239,7 +239,7 @@ export default {
     const error = ref(props.setupError ? props.setupError : null);
     if (!userIsAuth1.value) {
       store.dispatch("turnOffAnimation");
-      error.value = "Errore nell'autentificazione";
+      error.value = "Errore nell' autentificazione";
     }
 
     function handleError() {

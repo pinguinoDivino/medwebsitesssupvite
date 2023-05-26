@@ -1,6 +1,6 @@
 from django import forms
-from accounts.models import StudentAccount, CustomUser
-from .models import Experience, Rating, Tag, Opportunity, University, UnipiInternship
+from accounts.models import StudentAccount
+from .models import Experience, Rating, Tag, UnipiInternship
 from django.utils import timezone
 from core.utils import EXPERIENCE_TYPES, EXP_GROUP_TAGS, OPP_GROUP_TAGS, WARDS, UNIPI_INTERNSHIP_YEAR, \
     ATTENDANCE_CHOICES, UNIPI_INTERNSHIP_PLACES
@@ -22,12 +22,12 @@ class TagAdminForm(forms.ModelForm):
 class RatingAdminForm(forms.ModelForm):
     global_r = forms.IntegerField(max_value=10, min_value=0, label="Valutazione globale")
     stay_r = forms.IntegerField(max_value=10, min_value=0, label="Valutazione istituzione")
-    aquired_knowledge_r = forms.IntegerField(max_value=10, min_value=0, label="Valutazione conoscenza acquisita")
+    acquired_knowledge_r = forms.IntegerField(max_value=10, min_value=0, label="Valutazione conoscenza acquisita")
     involvement_r = forms.IntegerField(max_value=10, min_value=0, label="Valutazione coinvolgimento")
 
     class Meta:
         model = Rating
-        fields = ('global_r', 'stay_r', 'aquired_knowledge_r', "involvement_r")
+        fields = ('global_r', 'stay_r', 'acquired_knowledge_r', "involvement_r")
 
 
 class ExperienceCreationAdminForm(forms.ModelForm):
@@ -106,18 +106,4 @@ class UnipiInternshipAdminForm(forms.ModelForm):
     class Meta:
         model = UnipiInternship
         fields = ('author', 'review', 'author_contact', 'active')
-
-
-class OpportunityAdminForm(forms.ModelForm):
-    university = forms.ModelChoiceField(queryset=University.objects.all(), label='Università')
-
-    class Meta:
-        model = Opportunity
-        fields = ('author', 'description', 'istitution', 'ref', 'active')
-
-    def __init__(self, *args, **kwargs):
-        super(OpportunityAdminForm, self).__init__(*args, **kwargs)
-        pks = [x.username for x in CustomUser.objects.all() if x.is_auth2]
-        self.fields['author'].queryset = CustomUser.objects.filter(pk__in=pks)
-        self.fields['tags'].queryset = Tag.objects.filter(group__in=[x[0] for x in OPP_GROUP_TAGS])
 

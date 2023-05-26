@@ -19,7 +19,7 @@ export default {
       console.log(error.message);
     }
   },
-  async changeUserDpc(context, payload){
+  async putUserDpc(context, payload){
     try {
       await axiosService("/api/user-dpc/", "PUT" , payload);
       context.commit("setDpc", {dpc: payload.dpc})

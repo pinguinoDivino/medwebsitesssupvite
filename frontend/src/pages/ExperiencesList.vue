@@ -683,9 +683,6 @@ export default {
       if (property === "started_at") {
         return getGoodDateFormat(input);
       }
-      if (property === "started_at") {
-        return getGoodDateFormat(input);
-      }
       if (property === "rating") {
         return input['average'];
       }
