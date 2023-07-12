@@ -1,0 +1,18 @@
+.text-container {
+  height: 100%;
+  padding: 3px;
+}
+
+[data-theme="light"] .text-container a {
+  text-decoration: none;
+  color: black;
+}
+
+[data-theme="dark"] .text-container a {
+  text-decoration: none;
+  color: var(--orange);
+}
+
+a:hover {
+  font-weight: bold;
+}

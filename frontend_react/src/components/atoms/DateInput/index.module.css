@@ -1,0 +1,18 @@
+.inline-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date label {
+  padding-top: 4px;
+  padding-right: 8px;
+}
+
+.date input {
+  font-size: 0.85rem;
+  padding: 2px 3px;
+  justify-self: flex-end;
+  max-width: 255px;
+}

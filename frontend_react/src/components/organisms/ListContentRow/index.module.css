@@ -1,0 +1,36 @@
+.sidebar-closed {
+  max-width: 0;
+  width: 0;
+  padding-left: 0;
+}
+
+.sidebar {
+  height: 100%;
+  min-height: 80vh;
+  width: 350px;
+  border-top: 1px solid #c1b9b9;
+
+}
+
+.sidebar, .main-content {
+  transition: 0.3s ease-in;
+}
+
+.main-content {
+  margin-left: 0;
+}
+
+.modal-filter {
+  position: relative !important;
+}
+
+.filter-title {
+  background-color: grey;
+}
+
+@media screen and (min-width: 768px) {
+  .main-content-pl {
+    margin-left: 350px;
+  }
+}
+

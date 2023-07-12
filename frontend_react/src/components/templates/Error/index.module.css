@@ -1,0 +1,7 @@
+.not-found {
+  height: 70vh;
+}
+.notfound {
+  color: var(--danger);
+  text-align: center;
+}

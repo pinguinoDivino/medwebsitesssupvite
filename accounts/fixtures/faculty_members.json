@@ -1,0 +1,72 @@
+[
+  {
+    "model": "accounts.facultymember",
+    "pk": 1,
+    "fields": {
+      "first_name": "Michele",
+      "last_name": "Emdin",
+      "email": "michele.emdin@santannapisa.it",
+      "ssd": "MED/11"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 2,
+    "fields": {
+      "first_name": "Fabio Anastasio",
+      "last_name": "Recchia",
+      "email": "fabio.recchia@santannapisa.it",
+      "ssd": "BIO/09"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 3,
+    "fields": {
+      "first_name": "Alberto",
+      "last_name": "Giannoni",
+      "email": "alberto.giannoni@santannapisa.it",
+      "ssd": "BIO/09"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 4,
+    "fields": {
+      "first_name": "Claudio",
+      "last_name": "Passino",
+      "email": "claudio.passino@santannapisa.it",
+      "ssd": "MED/11"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 5,
+    "fields": {
+      "first_name": "Lionetti",
+      "last_name": "Vincenzo",
+      "email": "vincenzo.lionetti@santannapisa.it",
+      "ssd": "MED/41"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 6,
+    "fields": {
+      "first_name": "Debora",
+      "last_name": "Angeloni",
+      "email": "debora.angeloni@santannapisa.it",
+      "ssd": "BIO/11"
+    }
+  },
+  {
+    "model": "accounts.facultymember",
+    "pk": 7,
+    "fields": {
+      "first_name": "Mario",
+      "last_name": "Meola",
+      "email": "mario.meola@santannapisa.it",
+      "ssd": "MED/14"
+    }
+  }
+]

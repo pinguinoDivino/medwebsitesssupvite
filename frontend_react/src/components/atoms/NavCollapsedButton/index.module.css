@@ -1,0 +1,22 @@
+.button {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  cursor: pointer;
+  transform: translate(-5%, -50%);
+  margin-left: auto;
+}
+
+.line {
+  width: 30px;
+  height: 2px;
+  background-color: white;
+  margin: 0.4rem;
+}
+
+@media screen and (min-width: 1020px) {
+  .button {
+    display: none;
+  }
+}
+

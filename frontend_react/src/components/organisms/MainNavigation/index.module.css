@@ -1,0 +1,102 @@
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  position: relative;
+  z-index: 100;
+  display: block;
+  min-height: 12vh;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background-color: #333333;
+  font-family: "Zilla Slab", serif;
+  overflow: hidden;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin-left: auto;
+  padding: 1rem;
+  background-color: var(--backgroundColor) !important;
+
+  clip-path: circle(10px at 90% -10%);
+  -webkit-clip-path: circle(10px at 90% -10%);
+  transition: all 600ms ease-out;
+  pointer-events: all;
+
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.navbar div:last-child {
+  margin-left: auto;
+}
+
+.open {
+  clip-path: circle(3000px at 90% -10%);
+  -webkit-clip-path: circle(3000px at 90% -10%);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--white);
+  line-height: 1.23536;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+}
+
+nav a:hover {
+  color: var(--orange);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.menu a {
+  color: var(--fontColor);
+}
+
+@media screen and (min-width: 1020px) {
+  .nav {
+    position: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: inherit;
+    padding: 0.5rem 0;
+  }
+
+  .menu {
+    position: inherit;
+    flex-direction: row;
+    width: 70%;
+    height: 100%;
+    padding: 0 1rem 0 0;
+    background-color: inherit !important;
+    clip-path: none;
+    -webkit-clip-path: none;
+    transition: none;
+  }
+
+  .menu a {
+    color: white;
+  }
+}

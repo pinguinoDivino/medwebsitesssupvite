@@ -1,0 +1,778 @@
+[
+  {
+    "model": "experiences.tag",
+    "pk": "anatomia",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "angers",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "badalona",
+    "fields": {
+      "created_by": "p.morfino",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "bioinformatics",
+    "fields": {
+      "created_by": "l.camerini",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "biologia dello sviluppo",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "bonini",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "prof"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "borsa di studio",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "opportunity"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "boston",
+    "fields": {
+      "created_by": "l.saccaro",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "cambridge",
+    "fields": {
+      "created_by": "l.saccaro",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "canada",
+    "fields": {
+      "created_by": "s.gasparini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "cardiologia",
+    "fields": {
+      "created_by": "filip",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "cardiologia molecolare",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "cattolica",
+    "fields": {
+      "created_by": "l.luciani",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "chirurgia",
+    "fields": {
+      "created_by": "filip",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "chirurgia addominale",
+    "fields": {
+      "created_by": "r.facchin",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "chirurgia generale",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "chongqing",
+    "fields": {
+      "created_by": "a.favero",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "clinica",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "cnr",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "coscienza",
+    "fields": {
+      "created_by": "l.mangone",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "crispr-cas9",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "daily activity",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "opportunity"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "dermatologia",
+    "fields": {
+      "created_by": "f.manzomargiotta",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "edimburgo",
+    "fields": {
+      "created_by": "l.bazan",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "edinburgh",
+    "fields": {
+      "created_by": "l.bazan",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ematologia",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "embriologia",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "epfl",
+    "fields": {
+      "created_by": "b.milano",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "epilessia",
+    "fields": {
+      "created_by": "s.gasparini",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "erasmus",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "opportunity"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "farmacologia",
+    "fields": {
+      "created_by": "p.morfino",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "firenze",
+    "fields": {
+      "created_by": "s.gasparini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "fondazione monasterio",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "francia",
+    "fields": {
+      "created_by": "o.vatavu",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ftgm",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "genetica",
+    "fields": {
+      "created_by": "s.malafa",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "genova",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "genève",
+    "fields": {
+      "created_by": "b.milano",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "germania",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "humanitas",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "iit",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "immunologia",
+    "fields": {
+      "created_by": "filip",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "inghilterra",
+    "fields": {
+      "created_by": "a.visentini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "interfacce neurali",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "laboratorio",
+    "fields": {
+      "created_by": "m.landi",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "las palmas de gran canaria",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "lausanne",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "le chesnay",
+    "fields": {
+      "created_by": "l.saccaro",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "lima",
+    "fields": {
+      "created_by": "f.manzomargiotta",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "london",
+    "fields": {
+      "created_by": "a.visentini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "lund",
+    "fields": {
+      "created_by": "l.saccaro",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "malattie infettive",
+    "fields": {
+      "created_by": "f.manzomargiotta",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "mantovani",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "prof"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "medicina interna",
+    "fields": {
+      "created_by": "f.manzomargiotta",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "memoria",
+    "fields": {
+      "created_by": "l.bazan",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "meyer",
+    "fields": {
+      "created_by": "s.gasparini",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "milano",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "monaco",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "morelli",
+    "fields": {
+      "created_by": "r.facchin",
+      "group": "prof"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "munich",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "naldini",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "prof"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "nanomateriali",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "nch",
+    "fields": {
+      "created_by": "o.vatavu",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "neurologia",
+    "fields": {
+      "created_by": "l.saccaro",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "neuroscienze",
+    "fields": {
+      "created_by": "filip",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "normale",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "oncologia",
+    "fields": {
+      "created_by": "filip",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "oncologia molecolare",
+    "fields": {
+      "created_by": "a.montellato",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ortopedia",
+    "fields": {
+      "created_by": "l.arboit",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "padova",
+    "fields": {
+      "created_by": "f.leonetti",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "paris",
+    "fields": {
+      "created_by": "l.righini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "perelman school of medicine",
+    "fields": {
+      "created_by": "l.arboit",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "philadelphia",
+    "fields": {
+      "created_by": "l.arboit",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "pisa",
+    "fields": {
+      "created_by": "f.leonetti",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "plasticità sinaptica",
+    "fields": {
+      "created_by": "l.righini",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "psichiatria",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "pubblicazione",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "opportunity"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ricerca di base",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ricerca pre-clinica",
+    "fields": {
+      "created_by": "m.menduniderossi",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "ricerca traslazionale",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "roma",
+    "fields": {
+      "created_by": "l.luciani",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "sala operatoria",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "salamanca",
+    "fields": {
+      "created_by": "s.gasparini",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "san raffaele",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "schipani",
+    "fields": {
+      "created_by": "l.arboit",
+      "group": "prof"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "sfs",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "opportunity"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "sickkids",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "sla",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "spagna",
+    "fields": {
+      "created_by": "l.diotalevi",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "svizzera",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "torino",
+    "fields": {
+      "created_by": "m.landi",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "toronto",
+    "fields": {
+      "created_by": "g.panichella",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "trento",
+    "fields": {
+      "created_by": "l.bazan",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "trieste",
+    "fields": {
+      "created_by": "i.covazzi",
+      "group": "city"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "università di edimburgo",
+    "fields": {
+      "created_by": "l.bazan",
+      "group": "institute"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "zebrafish",
+    "fields": {
+      "created_by": "l.tessieri",
+      "group": "about"
+    }
+  },
+  {
+    "model": "experiences.tag",
+    "pk": "zürich",
+    "fields": {
+      "created_by": "s.latrofa",
+      "group": "city"
+    }
+  }
+]

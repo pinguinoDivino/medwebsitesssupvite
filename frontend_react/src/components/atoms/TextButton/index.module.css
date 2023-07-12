@@ -1,0 +1,80 @@
+.button {
+  text-decoration: none;
+  font: inherit;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.button:focus {
+  border-color: #2684FF !important;
+  outline: 0;
+}
+
+.button:hover {
+  transform: scale(1.04);
+  border-color: #2684FF !important;
+}
+
+.flat {
+  background-color: transparent;
+  color: #3a0061;
+  border: none;
+}
+
+.outline {
+  background-color: transparent;
+  border: 1px solid black;
+  outline: 0;
+}
+
+.flat:hover,
+.outline:hover {
+  transform: scale(1.001);
+  outline: 0;
+  text-decoration: none;
+}
+
+.success {
+  background-color: var(--success);
+  border: 1px solid var(--success);
+  color: white;
+}
+
+.danger {
+  background-color: var(--danger);
+  border: 1px solid var(--danger);
+  color: white;
+}
+
+.primary {
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  color: white;
+}
+
+.info,
+.default {
+  background-color: var(--info);
+  border: 1px solid var(--info);
+  color: white;
+}
+
+.classic {
+  background-color: #333333;
+  border: 1px solid #333333;
+  color: white;
+}
+
+.light {
+  background-color: var(--itembackgroundColorList);
+  border: 1px solid var(--itembackgroundColorList);
+  color: var(--fontColor);
+}
+
+.orange {
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
+  color: var(--fontColor);
+}

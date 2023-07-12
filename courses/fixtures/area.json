@@ -1,0 +1,100 @@
+[
+  {
+    "model": "courses.thematicarea",
+    "pk": 1,
+    "fields": {
+      "name": "Primo anno"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 2,
+    "fields": {
+      "name": "Cardiologia"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 3,
+    "fields": {
+      "name": "Oncologia"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 4,
+    "fields": {
+      "name": "Anestesiologia/Chirurgia"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 5,
+    "fields": {
+      "name": "Neuroscienze"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 6,
+    "fields": {
+      "name": "Nefrologia"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 7,
+    "fields": {
+      "name": "Fisiologia e Patologia Generale"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 8,
+    "fields": {
+      "name": "Potenziamento Pratica Clinica"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 9,
+    "fields": {
+      "name": "Propedeutico alla Ricerca Clinica/Tesi"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 10,
+    "fields": {
+      "name": "Potenziamento Biologia - Ricerca di Base"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 11,
+    "fields": {
+      "name": "Potenziamento Comunicazione"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 12,
+    "fields": {
+      "name": "Uomo e Ambiente"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 13,
+    "fields": {
+      "name": "SanitÓ"
+    }
+  },
+  {
+    "model": "courses.thematicarea",
+    "pk": 14,
+    "fields": {
+      "name": "Extrasettoriale"
+    }
+  }
+]

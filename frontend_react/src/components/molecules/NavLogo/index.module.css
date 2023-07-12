@@ -1,0 +1,16 @@
+.nav-logo {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  font-size: 2rem;
+  transform: translate(0, -50%);
+}
+
+@media screen and (min-width: 1020px) {
+  .nav-logo {
+    position: relative;
+    left: 0;
+    margin-left: 1rem;
+    transform: none;
+  }
+}

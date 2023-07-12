@@ -1,0 +1,10 @@
+.spacer {
+  padding-top: 0.3rem;
+  background-color: var(--backgroundColor);
+}
+
+@media screen and (min-width: 992px) {
+  .spacer {
+    padding-top: 1rem;
+  }
+}

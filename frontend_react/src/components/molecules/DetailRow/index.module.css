@@ -1,0 +1,58 @@
+.detail-row {
+  margin: 3rem 0;
+}
+
+.subtitleA {
+  color: #F56300;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.subtitleB {
+  font-size: 2.5rem;
+  line-height: 1.19048;
+  font-weight: 600;
+  letter-spacing: .004rem;
+  margin: 1rem 0;
+}
+
+[data-theme="light"] .subtitleB {
+  color: #130f0f;
+}
+
+[data-theme="dark"] .subtitleB {
+  color: #F5F5F7;
+}
+
+.subtitleC {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  line-height: 1.19048;
+  font-weight: 600;
+  color: #0071e3;
+  letter-spacing: 0.011em;
+  font-size: 1.3rem;
+}
+
+.text-container {
+  font-size: 1.2rem;
+  line-height: 1.19048;
+  letter-spacing: .011em;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+@media screen and (min-width: 768px) {
+  .detail-row {
+    margin: 4rem;
+  }
+}

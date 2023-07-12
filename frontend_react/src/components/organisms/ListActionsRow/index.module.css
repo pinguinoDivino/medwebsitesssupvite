@@ -1,0 +1,19 @@
+.select-input {
+  color: var(--fontColor) !important;
+}
+
+.select-selected {
+  background-color: var(--primary);
+}
+
+[data-theme="dark"] .select-inner, [data-theme="dark"] .select-menu {
+  background-color: var(--itembackgroundColorList) !important;
+}
+
+[data-theme="dark"] .select-input span {
+  background-color: white !important;
+}
+
+.select-input:hover {
+  border-color: black !important;
+}

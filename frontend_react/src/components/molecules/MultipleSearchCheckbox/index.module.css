@@ -1,0 +1,12 @@
+.search {
+  background-color: var(--backgroundColor);
+  color: var(--fontColor) !important;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  border: black 1px solid;
+  padding-left: 3px;
+}
+
+[data-theme="dark"] .search {
+  background-color: var(--itembackgroundColorList) !important;
+}

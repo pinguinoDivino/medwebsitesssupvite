@@ -1,0 +1,12 @@
+.ward-header {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.h3:hover {
+  transform: scale(1.02);
+}
+
+.ward-footer {
+  font-size: 0.8rem;
+}

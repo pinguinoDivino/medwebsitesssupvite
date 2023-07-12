@@ -1,0 +1,17 @@
+.drop-zone {
+  background-color: var(--itembackgroundColorList);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+[data-theme="dark"] .drop-zone {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #303339;
+}
+
+.item {
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+  cursor: pointer !important;
+}

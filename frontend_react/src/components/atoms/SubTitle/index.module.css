@@ -1,0 +1,23 @@
+.h2 {
+  margin: 1.5rem auto;
+  font-size: 2.7rem;
+  line-height: 1.08349;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  text-align: center;
+  padding-bottom: 0.3rem !important;
+}
+
+[data-theme="dark"] .h2 {
+  background-size: 54% 156%;
+  background: radial-gradient(ellipse at center, #eff1ff 10%, #000 100%) center center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .h2 {
+  background-size: 54% 156%;
+  background: radial-gradient(ellipse at center, #3b3d47 10%, #000 100%) center center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

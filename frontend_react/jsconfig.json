@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "_/*": [
+        "src/*"
+      ],
+      "_components/*": [
+        "src/components/*"
+      ],
+      "_atoms/*": [
+        "src/components/atoms/*"
+      ],
+      "_molecules/*": [
+        "src/components/molecules/*"
+      ],
+      "_organisms/*": [
+        "src/components/organisms/*"
+      ],
+      "_templates/*": [
+        "src/components/templates/*"
+      ],
+      "_contexts/*": [
+        "src/contexts/*"
+      ],
+      "_hooks/*": [
+        "src/hooks/*"
+      ],
+      "_pages/*": [
+        "src/pages/*"
+      ],
+      "_services/*": [
+        "src/services/*"
+      ],
+      "_store/*": [
+        "src/store/*"
+      ]
+    }
+  }
+}

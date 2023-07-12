@@ -1,0 +1,48 @@
+.side-container {
+  background-color: var(--backgroundColor);
+  border: 1px solid var(--backgroundColor);
+  padding: 1rem 0 0.8rem;
+  margin-top: 0.6rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  height: auto;
+}
+
+.side-header p {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+.side-inner {
+  padding: 0 0.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 450px) {
+  .side-inner {
+    margin: auto;
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  .side-inner {
+    padding: 0 0.6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .side-inner {
+    padding: 0 0.6rem;
+    display: flex;
+    flex-direction: column;
+  }
+}

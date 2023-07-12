@@ -1,0 +1,5 @@
+.grey {
+  background-color: var(--itembackgroundColorList);
+  border-radius: 6px;
+  padding: 0.8rem 1.3rem;
+}

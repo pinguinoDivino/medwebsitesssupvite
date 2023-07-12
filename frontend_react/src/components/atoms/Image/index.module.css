@@ -1,0 +1,10 @@
+.img-container {
+  margin: 0;
+  padding: 0;
+}
+
+.fit-img {
+  width: 100%;
+  object-fit: cover;
+  max-height: 600px;
+}

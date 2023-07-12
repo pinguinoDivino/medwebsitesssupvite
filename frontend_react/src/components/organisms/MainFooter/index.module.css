@@ -1,0 +1,15 @@
+.sticky-footer {
+  padding: 2rem 0;
+  flex-shrink: 0;
+  display: block;
+  margin-top: auto;
+}
+
+.copyright {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  line-height: 1;
+  font-size: .8rem;
+  gap: 20px;
+}

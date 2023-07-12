@@ -1,0 +1,14 @@
+.link {
+  transition: all .2s ease-in-out;
+}
+
+.link:hover {
+  text-decoration: none;
+  transform: scale(1.2);
+  font-weight: bold;
+  color: #449C9F;
+}
+
+.title {
+  color: #449C9F;
+}

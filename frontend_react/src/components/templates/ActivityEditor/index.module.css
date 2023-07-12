@@ -1,0 +1,36 @@
+.container-fluid {
+  min-height: 80vh;
+}
+
+.index {
+  width: 90%;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.index .select {
+  margin: 0.5rem auto;
+  width: 50%;
+  text-align: center;
+}
+
+.index option {
+  color: var(--fontColor);
+}
+
+@media screen and (min-width: 576px) {
+  .index {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .index {
+    width: 40%;
+  }
+}

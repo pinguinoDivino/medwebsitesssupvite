@@ -1,0 +1,43 @@
+.table-container {
+  overflow-x: auto;
+  transition: margin-left 0.5s;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-radius: 0.25em;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+}
+
+table tr {
+  border: 2px solid var(--itembackgroundColorList);
+  padding: 0.35em;
+}
+
+[data-theme="light"] table tbody tr:nth-child(odd) {
+  background: #F8F8F8;
+}
+
+[data-theme="dark"] table tbody tr:nth-child(odd) {
+  background: #2a2727;
+}
+
+table th,
+table td {
+  padding: 0.55rem;
+  text-align: center;
+}
+
+table th {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  position: relative;
+}

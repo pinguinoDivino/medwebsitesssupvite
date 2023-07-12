@@ -1,0 +1,28 @@
+[data-theme="light"] .contacts {
+  color: #58585A;
+}
+
+.contacts h3 {
+  margin: 0 0 1rem 0;
+  padding-top: 0;
+}
+
+.contacts p {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.email {
+  line-height: 1.07143;
+  font-weight: 700;
+  color: #0077ED;
+}
+
+.author, .reference {
+  color: #373739;
+  font-weight: bold;
+}
+
+[data-theme="dark"] .author, [data-theme="dark"] .reference {
+  color: white;
+}
