@@ -230,7 +230,7 @@ class SfsLabErasmusAdditionalAttributes(models.Model):
 
     def __str__(self):
         return "Attributi del soggiorno fuorisede presso %s : %s " % (
-            self.istitution, self.experience.started_at.strftime('%B %Y'))
+            self.institution, self.experience.started_at.strftime('%B %Y'))
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
@@ -282,7 +282,7 @@ class InternshipAdditionalAttributes(models.Model):
 
     def __str__(self):
         return "Tirocinio non professionalizzante presso il reparto di %s dell'istituto %s " % \
-               (self.ward, self.istitution)
+               (self.ward, self.institution)
 
     def get_admin_url(self):
         content_type = ContentType.objects.get_for_model(self.__class__)

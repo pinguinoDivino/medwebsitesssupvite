@@ -796,3 +796,10 @@ input[type="file"] {
 .act-title-detail {
   color: #449C9F;
 }
+
+
+<!--
+-->
+.theme-toggle {
+  display: none !important;
+}

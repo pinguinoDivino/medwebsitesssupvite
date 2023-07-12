@@ -209,7 +209,7 @@ class ExperienceCountryGraphDataApiView(views.APIView):
                 data[el.city.country] += 1
             else:
                 data[el.city.country] = 1
-        return Response(data)
+        return Response(dict(Counter(data).most_common(10)))
 
 
 class ExperienceTagGraphDataApiView(views.APIView):
