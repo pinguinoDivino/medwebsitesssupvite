@@ -9,11 +9,11 @@ import styles from "./index.module.css";
 const GeneralDetailRow = ({ experience, className }) => {
   const attrComponent = (() => {
     switch (experience.type) {
-      case "sfs":
+      case "SFS" || "Laboratorio" || "Erasmus":
         return <SfsDetailRow attrs={experience.attrs} />;
-      case "congress":
+      case "Congresso":
         return <CongressDetailRow attrs={experience.attrs} />;
-      case "internship":
+      case "Tirocinio":
         return <InternshipDetail attrs={experience.attrs} />;
       default:
         // eslint-disable-next-line react/no-unescaped-entities
